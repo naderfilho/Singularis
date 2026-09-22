@@ -71,7 +71,7 @@ This repository turns that sentence into solved equations, trained neural networ
 | 9 | A neural network that only sees the equations (PINN) reconstructs the bounce with error $10^{-5}$. | **result of this project** | `pinn.py`, fig. 11 |
 
 <details>
-<summary><b> Kruskal diagram with the star erasing the white hole</b></summary>
+<summary><b>Kruskal diagram with the star erasing the white hole</b></summary>
 <br>
 
 ![kruskal](docs/img/01_kruskal.png)
@@ -81,7 +81,7 @@ The hatched region is the star's interior: there the metric is Friedmann, not Sc
 </details>
 
 <details>
-<summary><b> The universe inside the black hole bouncing</b></summary>
+<summary><b>The universe inside the black hole bouncing</b></summary>
 <br>
 
 ![interior](docs/img/04_interior_universo.png)
@@ -98,13 +98,13 @@ Four numerical tests run inside the models above, with results that, as far as w
 
 | # | open question | what the test found |
 |---|---|---|
-| A | What happens **outside** the star when the interior bounces? | The Israel junction with Schwarzschild is impossible in a finite interval around the bounce. Within the black-bounce family **only ℓ = R_b** works: $\ell^3 = 3M/4\pi\rho_b$. For 10 M, ℓ ≈ 5×10⁻¹⁰ m; the wall between the universes weighs $R_b c^2/G \approx 7\times10^{17}$ kg. |
-| B | Does the parent's horizon bound the child's entropy? | If so, the parent of our universe had ≥ 5×10¹³ M and a tree of universes with our fecundity has **fewer than 5 generations**. |
+| A | What happens **outside** the star when the interior bounces? | The Israel junction with Schwarzschild is impossible in a finite interval around the bounce. Within the black-bounce family **only ℓ = R_b** works: $\ell^3 = 3M/4\pi\rho_b$. For 10 M☉, ℓ ≈ 5×10⁻¹⁰ m; the wall between the universes weighs $R_b c^2/G \approx 7\times10^{17}$ kg. |
+| B | Does the parent's horizon bound the child's entropy? | If so, the parent of our universe had ≥ 5×10¹³ M☉ and a tree of universes with our fecundity has **fewer than 5 generations**. |
 | C | Does cosmological natural selection work under that bound? | No: effective fecundity drops to ~1 child per universe and the dynamics becomes neutral drift. **CNS and holography are nearly incompatible.** |
-| D | Does Smolin's prediction (neutron star M_max ≈ 1.6 M) survive the data? | Excluded at > 4σ by four pulsars; the revised version (2 M) is at the edge. |
+| D | Does Smolin's prediction (neutron star M_max ≈ 1.6 M☉) survive the data? | Excluded at > 4σ by four pulsars; the revised version (2 M☉) is at the edge. |
 
 <details>
-<summary><b> The junction figure (why only ℓ = R_b works)</b></summary>
+<summary><b>The junction figure (why only ℓ = R_b works)</b></summary>
 <br>
 
 ![juncao](docs/img/16_fronteira_juncao.png)
@@ -128,7 +128,7 @@ Nothing confirms that we were born from a black hole. What can be done is the co
 | Accelerated expansion | not predicted | $\Lambda$ dominates | not predicted |
 
 <details>
-<summary><b> The primordial spectrum coming out of the bounce</b></summary>
+<summary><b>The primordial spectrum coming out of the bounce</b></summary>
 <br>
 
 ![espectro](docs/img/20_nascimento_espectro.png)
@@ -152,7 +152,7 @@ python scripts/run_all.py          # 21 figures + renders in ./output (~4 min on
 **Real-time viewer:** open [`web/index.html`](web/index.html) in a WebGL2 browser and drag **ℓ** from 0 to 3. Every pixel integrates the exact geodesic on the GPU.
 
 <details>
-<summary><b> Use as a library</b></summary>
+<summary><b>Use as a library</b></summary>
 <br>
 
 ```python
@@ -177,7 +177,7 @@ print(bs.spectral_index(ks, bs.spectrum(ks)))    # ≈ 1.00
 </details>
 
 <details>
-<summary><b> Run only part of it</b></summary>
+<summary><b>Run only part of it</b></summary>
 <br>
 
 ```bash
