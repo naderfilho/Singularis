@@ -49,12 +49,19 @@ class SeedUniverse:
     M_kg: float
     m_fermion_kg: float = M_NEUTRON
     R0_over_rs: float = 100.0  # raio inicial da estrela em unidades do raio de Schwarzschild
+    mechanism: str = "einstein_cartan"   # "einstein_cartan" (rho_b = 4 m^2/pi) ou "lqc" (rho_c ~ 0.41 rho_Pl)
 
     def __post_init__(self):
+        from ..quantum.lqc import RHO_C_PLANCK
         self.M_pl = self.M_kg / M_PLANCK  # massa em unidades de Planck (G=c=hbar=1 => comprimento = massa)
         self.m_pl = self.m_fermion_kg / M_PLANCK
         self.rs_pl = 2 * self.M_pl
-        self.rho_bounce_pl = bounce_density_planck(self.m_fermion_kg)
+        if self.mechanism == "einstein_cartan":
+            self.rho_bounce_pl = bounce_density_planck(self.m_fermion_kg)
+        elif self.mechanism == "lqc":
+            self.rho_bounce_pl = RHO_C_PLANCK
+        else:
+            raise ValueError("mechanism deve ser 'einstein_cartan' ou 'lqc'")
         # interior OS: rho a^3 = const  =>  rho(a) = 3 M / (4 pi R^3) com R = a sin(chi0)
         # bounce quando rho = rho_b  =>  R_b^3 = 3 M / (4 pi rho_b)
         self.R_bounce_pl = (3 * self.M_pl / (4 * np.pi * self.rho_bounce_pl)) ** (1 / 3)
