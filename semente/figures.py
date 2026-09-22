@@ -570,6 +570,8 @@ def make_all(with_renders=True, render_size=(1280, 720)):
     fig_pinn()
     if with_renders:
         renders(*render_size)
+    from .figures_fronteira import make_all as fronteira
+    fronteira()
     info = observable_universe_as_black_hole()
     with open(os.path.join(OUT, "universo_observavel_como_buraco_negro.json"), "w", encoding="utf-8") as fh:
         json.dump(info, fh, indent=2)

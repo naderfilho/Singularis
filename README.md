@@ -30,6 +30,24 @@ Tudo isso está derivado em [`docs/01_matematica.md`](docs/01_matematica.md).
 
 ---
 
+## O diferencial: experimentos sobre perguntas em aberto
+
+Quatro testes numéricos feitos dentro dos modelos acima, com resultados que, até onde sabemos,
+não estavam calculados nesta forma (`semente/fronteira.py`, figuras 16–19,
+[`docs/02_fronteira.md`](docs/02_fronteira.md)):
+
+| # | pergunta aberta | o que o teste encontrou |
+|---|---|---|
+| A | O que acontece **fora** da estrela quando o interior ricocheteia? | A junção de Israel com Schwarzschild é impossível num intervalo finito em torno do ricochete (nenhuma camada de energia salva). Na família black-bounce, **só ℓ = R_b** funciona: o parâmetro de Simpson–Visser fica fixado pelo interior, $\ell^3 = 3M/4\pi\rho_b$. Para 10 M☉, ℓ ≈ 5×10⁻¹⁰ m; a parede entre os universos pesa $R_b c^2/G \approx 7\times10^{17}$ kg. |
+| B | O horizonte do pai limita a entropia do filho? | Se sim, o pai do nosso universo tinha ≥ 5×10¹³ M☉, e uma árvore de universos com a nossa fecundidade tem **menos de 5 gerações** ($k_{max} = \ln(M_0/m_{Pl})/\ln\sqrt N$). |
+| C | A seleção natural cosmológica funciona com esse limite? | Não: a fecundidade efetiva cai para ~1 filho por universo na primeira geração e a dinâmica vira deriva neutra. **CNS e holografia são quase incompatíveis.** |
+| D | A previsão de Smolin (M_max de estrelas de nêutrons ≈ 1.6 M☉) sobrevive aos dados? | Excluída por > 4σ em quatro pulsares; a versão revisada (2 M☉) está no limite. |
+
+Cada resultado depende de uma hipótese explícita (tratamento efetivo da torção; limite
+holográfico). É onde a física está indecisa, e por isso são testes, não teoremas.
+
+---
+
 ## Instalação e uso
 
 ```bash
@@ -74,6 +92,10 @@ save_png(render(Scene(l=0.8), Camera(width=960, height=540)), "meu_buraco.png")
 | `10_geodesicas.png` | Órbitas de fótons e partículas (integrador geral com Christoffel simbólico). |
 | `11_pinn.png` | PINN vs integrador: ricochete e órbita de fóton. |
 | `12–15_render_*.png` | Ray-tracer: Schwarzschild, black-bounce, buraco de minhoca, lente vista de cima. |
+| `16_fronteira_juncao.png` | Junção de Israel do ricochete: onde Schwarzschild falha, por que só ℓ = R_b funciona, ℓ previsto vs massa. |
+| `17_fronteira_entropia.png` | Piso de massa do pai pelo limite entrópico; profundidade máxima da árvore de universos. |
+| `18_fronteira_selecao_orcamento.png` | Seleção de Smolin com orçamento holográfico: a fecundidade efetiva colapsa para ~1. |
+| `19_fronteira_estrelas_neutrons.png` | Massas de pulsares vs previsão de Smolin. |
 
 ---
 
@@ -90,8 +112,10 @@ semente/
   pinn.py        PINNs (torch): ricochete na variavel de volume; orbita de foton
   raytracer.py   ray-tracer numpy: Page-Thorne, redshift, lente, dois ceus
   figures.py     todas as figuras
+  fronteira.py   experimentos sobre perguntas em aberto (juncao de Israel, limite entropico,
+                 selecao com orcamento, dados de pulsares) + figures_fronteira.py
 web/index.html   ray-tracer WebGL2 em tempo real (GLSL)
-tests/           14 testes (round-trips, limites classicos, solucoes exatas, PINN)
+tests/           22 testes (round-trips, limites classicos, solucoes exatas, PINN, fronteira)
 docs/            derivacoes
 ```
 
