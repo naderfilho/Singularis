@@ -6,7 +6,7 @@
 > Este projeto pega essa frase e a transforma em equações resolvidas, redes neurais treinadas
 > e imagens calculadas — sem esconder onde a física termina e a especulação começa.
 
-![render](output/13_render_black_bounce.png)
+![render](docs/img/13_render_black_bounce.png)
 
 *Imagem calculada, não desenhada: buraco negro regular (black-bounce, ℓ = 1M) com disco de
 acreção de Page–Thorne. Dentro da "sombra" aparece o céu do outro universo, visto através do
@@ -30,6 +30,8 @@ buraco branco. Geodésicas exatas, redshift gravitacional + Doppler, cor de corp
 
 Tudo isso está derivado em [`docs/01_matematica.md`](docs/01_matematica.md).
 
+![kruskal](docs/img/01_kruskal.png)
+
 ---
 
 ## O diferencial: experimentos sobre perguntas em aberto
@@ -48,6 +50,8 @@ não estavam calculados nesta forma (`semente/fronteira.py`, figuras 16–19,
 Cada resultado depende de uma hipótese explícita (tratamento efetivo da torção; limite
 holográfico). É onde a física está indecisa, e por isso são testes, não teoremas.
 
+![juncao](docs/img/16_fronteira_juncao.png)
+
 ---
 
 ## O modelo contra o nosso universo
@@ -63,6 +67,8 @@ comparamos (`semente/nascimento.py`, figuras 20–21, [`docs/03_nascimento.md`](
 | Massa do pai a partir da curvatura + conservação | $\ge 4.7\times10^{23}\,M_\odot$ | massa do universo observável ~ $10^{23}\,M_\odot$ | consistente (não é evidência) |
 | Razão tensor/escalar do ricochete de matéria mínimo | $r = 24$ | $r < 0.036$ | **falsificado** na versão mínima |
 | Expansão acelerada | não prevista | $\Lambda$ domina | não previsto |
+
+![espectro](docs/img/20_nascimento_espectro.png)
 
 Placar: quatro compatíveis, um falsificado, um não previsto. O modelo está **vivo e restrito**.
 O próximo teste natural (aberto no repositório) é refazer o espectro com $k=+1$ e tensores para ver se $r$ cai.
