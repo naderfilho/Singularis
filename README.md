@@ -1,6 +1,6 @@
 # SEMENTE — Cosmologia de Buracos Negros
 
-*English name for the repository:* **`black-hole-genesis`** (SEMENTE = "seed": the white-hole seed inside every black hole).
+*Repository:* **[github.com/naderfilho/blackhole-genesis](https://github.com/naderfilho/blackhole-genesis)** (SEMENTE = "seed": the white-hole seed inside every black hole).
 
 > *Todo buraco negro guarda a semente de um buraco branco. Todo buraco branco é um Big Bang.*
 > Este projeto pega essa frase e a transforma em equações resolvidas, redes neurais treinadas
