@@ -1,5 +1,7 @@
 # SEMENTE — Cosmologia de Buracos Negros
 
+*English name for the repository:* **`black-hole-genesis`** (SEMENTE = "seed": the white-hole seed inside every black hole).
+
 > *Todo buraco negro guarda a semente de um buraco branco. Todo buraco branco é um Big Bang.*
 > Este projeto pega essa frase e a transforma em equações resolvidas, redes neurais treinadas
 > e imagens calculadas — sem esconder onde a física termina e a especulação começa.
@@ -45,6 +47,25 @@ não estavam calculados nesta forma (`semente/fronteira.py`, figuras 16–19,
 
 Cada resultado depende de uma hipótese explícita (tratamento efetivo da torção; limite
 holográfico). É onde a física está indecisa, e por isso são testes, não teoremas.
+
+---
+
+## O modelo contra o nosso universo
+
+Nada confirma que nascemos de um buraco negro. O que dá para fazer é o teste de consistência:
+o modelo prevê propriedades do universo-filho; medimos o nosso (Planck 2018, BICEP/Keck 2021);
+comparamos (`semente/nascimento.py`, figuras 20–21, [`docs/03_nascimento.md`](docs/03_nascimento.md)):
+
+| previsão do modelo | previsto | observado | veredito |
+|---|---|---|---|
+| Espectro primordial: resolvemos Mukhanov–Sasaki através do ricochete de torção com vácuo de Bunch–Davies na contração de poeira | $n_s = 1.003$ (platô, < 1% de variação em 1.2 décadas) | $n_s = 0.9665 \pm 0.0038$ | **compatível**: quase-invariância de escala **sem inflação**; a inclinação de 3% precisa de correção |
+| Curvatura: o filho é fechado | $\Omega_k < 0$ | Planck+BAO $0.0007\pm0.0019$; Planck só $-0.011\pm0.0065$ | **compatível**, falsificável |
+| Massa do pai a partir da curvatura + conservação | $\ge 4.7\times10^{23}\,M_\odot$ | massa do universo observável ~ $10^{23}\,M_\odot$ | consistente (não é evidência) |
+| Razão tensor/escalar do ricochete de matéria mínimo | $r = 24$ | $r < 0.036$ | **falsificado** na versão mínima |
+| Expansão acelerada | não prevista | $\Lambda$ domina | não previsto |
+
+Placar: quatro compatíveis, um falsificado, um não previsto. O modelo está **vivo e restrito**.
+O próximo teste natural (aberto no repositório) é refazer o espectro com $k=+1$ e tensores para ver se $r$ cai.
 
 ---
 
@@ -96,6 +117,8 @@ save_png(render(Scene(l=0.8), Camera(width=960, height=540)), "meu_buraco.png")
 | `17_fronteira_entropia.png` | Piso de massa do pai pelo limite entrópico; profundidade máxima da árvore de universos. |
 | `18_fronteira_selecao_orcamento.png` | Seleção de Smolin com orçamento holográfico: a fecundidade efetiva colapsa para ~1. |
 | `19_fronteira_estrelas_neutrons.png` | Massas de pulsares vs previsão de Smolin. |
+| `20_nascimento_espectro.png` | Mukhanov–Sasaki através do ricochete: potencial, espectro com n_s ≈ 1, modos congelando. |
+| `21_nascimento_veredito.png` | Massa do pai vs curvatura observada e a tabela de vereditos. |
 
 ---
 
@@ -114,8 +137,10 @@ semente/
   figures.py     todas as figuras
   fronteira.py   experimentos sobre perguntas em aberto (juncao de Israel, limite entropico,
                  selecao com orcamento, dados de pulsares) + figures_fronteira.py
+  nascimento.py  previsoes para o universo-filho vs Planck/BICEP (Mukhanov-Sasaki atraves do
+                 ricochete, curvatura, massa do pai, r) + figures_nascimento.py
 web/index.html   ray-tracer WebGL2 em tempo real (GLSL)
-tests/           22 testes (round-trips, limites classicos, solucoes exatas, PINN, fronteira)
+tests/           27 testes (round-trips, limites classicos, solucoes exatas, PINN, fronteira, nascimento)
 docs/            derivacoes
 ```
 
