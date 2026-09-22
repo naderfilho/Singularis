@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEMENTE — buraco negro ⇄ buraco branco</title>
+<style>
+  :root { --bg:#07090f; --panel:#0f1320; --line:#232a3d; --text:#e6e9f0; --muted:#8a93a6; --accent:#ffd166; --bh:#6c7bff; --other:#c77dff; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--text); font:14px/1.45 system-ui,Segoe UI,Roboto,sans-serif; }
+  #wrap { display:grid; grid-template-columns: 1fr 340px; height:100%; }
+  #view { position:relative; min-width:0; }
+  canvas#gl { width:100%; height:100%; display:block; background:#000; }
+  #hud { position:absolute; left:12px; top:10px; font-size:12px; color:var(--muted); background:rgba(7,9,15,.55); padding:6px 9px; border-radius:6px; }
+  aside { background:var(--panel); border-left:1px solid var(--line); padding:14px 16px; overflow:auto; }
+  h1 { font-size:17px; margin:0 0 4px; letter-spacing:.3px; }
+  h1 span { color:var(--accent); }
+  .sub { color:var(--muted); font-size:12px; margin-bottom:12px; }
+  label { display:block; margin:10px 0 2px; font-size:12px; color:var(--muted); }
+  label b { color:var(--text); float:right; font-weight:600; }
+  input[type=range] { width:100%; accent-color:var(--accent); }
+  .row { display:flex; gap:8px; margin-top:8px; }
+  button { flex:1; background:#182036; color:var(--text); border:1px solid var(--line); border-radius:6px; padding:7px 8px; cursor:pointer; font-size:12px; }
+  button.on { border-color:var(--accent); color:var(--accent); }
+  .kind { margin:12px 0; padding:9px 10px; border-radius:6px; border:1px solid var(--line); font-size:12.5px; }
+  .kind.s { border-color:#4b5bff; } .kind.b { border-color:#40e0d0; } .kind.w { border-color:var(--other); }
+  p.exp { font-size:12.5px; color:#c7cbd6; margin:8px 0; }
+  code { color:var(--accent); font-size:12px; }
+  a { color:var(--accent); }
+  @media (max-width:820px){ #wrap{ grid-template-columns:1fr; grid-template-rows: 60vh 1fr; } aside{ border-left:0; border-top:1px solid var(--line);} }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="view">
+    <canvas id="gl"></canvas>
+    <div id="hud">geodésicas nulas integradas na GPU (RK4) · <span id="fps">–</span></div>
+  </div>
+  <aside>
+    <h1><span>SEMENTE</span> · o outro lado do buraco negro</h1>
+    <div class="sub">Ray-tracer relativístico em tempo real da métrica black-bounce de Simpson–Visser. Mova <b>ℓ</b> e veja a singularidade virar uma garganta para outro universo.</div>
+
+    <label>ℓ / M (parâmetro de ricochete) <b id="vEll">0.00</b></label>
+    <input id="ell" type="range" min="0" max="3" step="0.01" value="0">
+    <div id="kind" class="kind s"></div>
+
+    <label>inclinação da câmera (°) <b id="vInc">80</b></label>
+    <input id="inc" type="range" min="1" max="89" step="1" value="80">
+    <label>distância da câmera (M) <b id="vCam">40</b></label>
+    <input id="cam" type="range" min="12" max="120" step="1" value="40">
+    <label>campo de visão (°) <b id="vFov">52</b></label>
+    <input id="fov" type="range" min="15" max="100" step="1" value="52">
+    <label>exposição <b id="vExp">0.35</b></label>
+    <input id="exp" type="range" min="0.05" max="2" step="0.01" value="0.35">
+    <label>qualidade (escala de render) <b id="vQ">0.6</b></label>
+    <input id="q" type="range" min="0.25" max="1" step="0.05" value="0.6">
+    <div class="row">
+      <button id="bDisk" class="on">disco de acreção</button>
+      <button id="bOrbit">orbitar câmera</button>
+    </div>
+    <div class="row">
+      <button id="p0">Schwarzschild</button>
+      <button id="p1">ℓ = 1 (ricochete)</button>
+      <button id="p2">ℓ = 2.6 (minhoca)</button>
+    </div>
+
+    <p class="exp"><b>O que você está vendo.</b> Cada pixel dispara um raio para trás no tempo e integra a equação exata
+      <code>r'' = L² r (R − 3M)/R⁵</code>, <code>R = √(r²+ℓ²)</code>, até cair, bater no disco ou escapar.
+      O disco segue o fluxo de Page–Thorne; cores e brilho incluem redshift gravitacional e Doppler
+      (<code>g = √(1−3M/R)/(1−Ωλ)</code>, brilho ∝ g⁴).</p>
+    <p class="exp"><b>ℓ = 0</b>: Schwarzschild. A sombra é preta: raios que cruzam r = 2M terminam na singularidade.</p>
+    <p class="exp"><b>0 &lt; ℓ &lt; 2M</b>: buraco negro regular. Os mesmos raios atravessam r = 0 e emergem no universo
+      r &lt; 0 (céu violeta). Na geometria eterna, dentro da "sombra" você vê a luz que veio do universo anterior
+      pelo buraco branco — a versão geométrica de "cada buraco negro guarda outro universo".</p>
+    <p class="exp"><b>ℓ &gt; 2M</b>: sem horizonte; um buraco de minhoca atravessável entre dois universos.</p>
+    <p class="exp" style="color:var(--muted)">Parte do projeto open source <b>SEMENTE</b> (Python + WebGL, licença MIT). A geometria é exata; as únicas escolhas estéticas são a temperatura do disco e o mapa de tons.</p>
+  </aside>
+</div>
+
+<script id="vs" type="x-shader/x-vertex">#version 300 es
+in vec2 p; void main(){ gl_Position = vec4(p,0.,1.); }
+</script>
+<script id="fs" type="x-shader/x-fragment">#version 300 es
+precision highp float;
+out vec4 frag;
+uniform vec2 uRes;
+uniform float uEll, uInc, uCamR, uFov, uExp, uTime;
+uniform int uDisk;
+const float M = 1.0;
+const float ROUT = 22.0;
+const float RFAR = 150.0;
+const float TPEAK = 6500.0;
+
+float hash(vec3 p){ p = fract(p*0.3183099 + vec3(0.1,0.2,0.3)); p += dot(p, p.yzx + 19.19); return fract((p.x+p.y)*p.z); }
+
+vec3 blackbody(float T){ // Tanner Helland fit, retorna RGB linear
+  T = clamp(T, 1000.0, 40000.0)/100.0;
+  float r = T<=66.0 ? 255.0 : 329.698727446*pow(T-60.0,-0.1332047592);
+  float g = T<=66.0 ? 99.4708025861*log(T)-161.1195681661 : 288.1221695283*pow(T-60.0,-0.0755148492);
+  float b = T>=66.0 ? 255.0 : (T<=19.0 ? 0.0 : 138.5177312231*log(T-10.0)-305.0447927307);
+  vec3 c = clamp(vec3(r,g,b)/255.0, 0.0, 1.0);
+  return pow(c, vec3(2.2));
+}
+
+float pageThorne(float R){ // forma fechada (x = sqrt(R/M)), Mdot = 1
+  float x = sqrt(max(R,6.0*M)/M); float s3 = sqrt(3.0), s6 = sqrt(6.0);
+  float I = (x - s6) - (s3/2.0)*(log((x-s3)/(x+s3)) - log((s6-s3)/(s6+s3)));
+  return R < 6.0*M ? 0.0 : 3.0/(8.0*3.14159265)*I/(x*x*x*x*x*(x*x-3.0));
+}
+
+vec3 sky(vec3 d, float seed, vec3 tint, vec3 bandAxis, float density){
+  float cell = 220.0;
+  vec3 q = (d + 1.0)*cell;
+  vec3 c = floor(q);
+  float h1 = hash(c + seed), h2 = hash(c + seed + 17.0), h3 = hash(c + seed + 91.0);
+  float star = h1 < density ? 1.0 : 0.0;
+  vec3 f = q - c - 0.5;
+  float prof = exp(-dot(f,f)/(0.02 + 0.06*h2*h2*h2));
+  float mag = star*prof*(0.15 + 2.5*pow(h2,6.0));
+  vec3 col = blackbody(2500.0 + 12000.0*h3*h3);
+  float lat = abs(dot(d, normalize(bandAxis)));
+  float wob = 0.75 + 0.25*cos(9.0*d.x + 5.0*d.y + seed)*cos(7.0*d.z - 3.0*d.x);
+  float glow = 0.035*exp(-pow(lat/0.18, 2.0))*wob;
+  return (mag*col + glow*vec3(0.75,0.85,1.0))*tint;
+}
+
+void main(){
+  float l = uEll;
+  vec2 ndc = (gl_FragCoord.xy/uRes)*2.0 - 1.0;
+  float aspect = uRes.x/uRes.y;
+  float tanf = tan(radians(uFov)*0.5);
+  float thc = radians(uInc);
+  vec3 rhat = vec3(sin(thc), 0.0, cos(thc));
+  vec3 thhat = vec3(cos(thc), 0.0, -sin(thc));
+  vec3 phhat = vec3(0.0, 1.0, 0.0);
+  vec3 dl = normalize(vec3(-1.0, -ndc.y*tanf, ndc.x*tanf*aspect)); // (e_r, e_theta, e_phi)
+  vec3 d3 = dl.x*rhat + dl.y*thhat + dl.z*phhat;
+  float Rcam = sqrt(uCamR*uCamR + l*l);
+  float fcam = 1.0 - 2.0*M/Rcam;
+  float sina = sqrt(max(1.0 - dl.x*dl.x, 0.0));
+  float L = Rcam*sina/sqrt(fcam);
+  vec3 e1 = rhat;
+  vec3 e2 = d3 - dl.x*rhat;
+  float n2 = length(e2);
+  e2 = n2 < 1e-6 ? thhat : e2/n2;
+  vec3 nrm = cross(e1, e2);
+  float r = uCamR;
+  float v = dl.x*sqrt(max(1.0 - L*L*fcam/(Rcam*Rcam), 0.0));
+  float phi = 0.0;
+  float zprev = Rcam*e1.z;
+  int status = 0; // 1 disco, 2 nosso ceu, 3 outro ceu, 4 capturado
+  float hitR = 0.0, hitLam = 0.0;
+  vec3 outDir = vec3(0.0);
+  for (int i = 0; i < 700; i++){
+    float R = sqrt(r*r + l*l);
+    float h = min(0.03*R*R/(L + 0.1), 0.25*R/(abs(v) + 0.1));
+    h = clamp(h, 1e-3, 40.0);
+    // RK4 em (r, v, phi)
+    float R1 = R;                              float a1 = L*L*r*(R1-3.0*M)/(R1*R1*R1*R1*R1);
+    float r2 = r + 0.5*h*v, v2 = v + 0.5*h*a1; float R2 = sqrt(r2*r2+l*l); float a2 = L*L*r2*(R2-3.0*M)/(R2*R2*R2*R2*R2);
+    float r3 = r + 0.5*h*v2, v3 = v + 0.5*h*a2; float R3 = sqrt(r3*r3+l*l); float a3 = L*L*r3*(R3-3.0*M)/(R3*R3*R3*R3*R3);
+    float r4 = r + h*v3, v4 = v + h*a3;        float R4 = sqrt(r4*r4+l*l); float a4 = L*L*r4*(R4-3.0*M)/(R4*R4*R4*R4*R4);
+    float rn = r + h*(v + 2.0*v2 + 2.0*v3 + v4)/6.0;
+    float vn = v + h*(a1 + 2.0*a2 + 2.0*a3 + a4)/6.0;
+    float pn = phi + h*L*(1.0/(R1*R1) + 2.0/(R2*R2) + 2.0/(R3*R3) + 1.0/(R4*R4))/6.0;
+    float Rn = sqrt(rn*rn + l*l);
+    float zn = Rn*(cos(pn)*e1.z + sin(pn)*e2.z);
+    if (uDisk == 1 && zn*zprev < 0.0 && rn > 0.0 && r > 0.0){
+      float fr = zprev/(zprev - zn);
+      float Rc = R + fr*(Rn - R);
+      if (Rc >= 6.0*M && Rc <= ROUT){ status = 1; hitR = Rc; hitLam = -L*nrm.z; break; }
+    }
+    if (Rn > RFAR && rn*vn > 0.0){
+      vec3 vel = vn*(cos(pn)*e1 + sin(pn)*e2) + (L/Rn)*(-sin(pn)*e1 + cos(pn)*e2);
+      outDir = normalize(vel);
+      status = rn > 0.0 ? 2 : 3; break;
+    }
+    if (l == 0.0 && Rn < 2.002*M){ status = 4; break; }
+    r = rn; v = vn; phi = pn; zprev = zn;
+  }
+  vec3 col = vec3(0.0);
+  if (status == 1){
+    float Om = sqrt(M/(hitR*hitR*hitR));
+    float g = sqrt(1.0 - 3.0*M/hitR)/(1.0 - Om*hitLam)/sqrt(fcam);
+    float F = pageThorne(hitR);
+    float Fmax = pageThorne(9.55*M);
+    float Tem = TPEAK*pow(F/Fmax, 0.25);
+    float bright = g*g*g*g*(F/Fmax);
+    col = blackbody(g*Tem)*bright*2.2;
+  } else if (status == 2){
+    col = sky(outDir, 1.0, vec3(1.0), vec3(0.2,0.0,0.98), 0.01);
+  } else if (status == 3){
+    col = sky(outDir, 2.0, vec3(1.25,0.65,1.15), vec3(0.9,0.3,0.2), 0.016);
+    float neb = 0.05*exp(-((outDir.x-0.3)*(outDir.x-0.3) + (outDir.z+0.2)*(outDir.z+0.2))/0.5);
+    col += neb*vec3(0.6,0.15,0.9);
+  }
+  col *= uExp;
+  col = col/(1.0 + col);
+  frag = vec4(pow(col, vec3(1.0/2.2)), 1.0);
+}
+</script>
+
+<script>
+(function(){
+  const canvas = document.getElementById('gl');
+  const gl = canvas.getContext('webgl2', {antialias:false, preserveDrawingBuffer:false});
+  if (!gl){ document.getElementById('hud').textContent = 'WebGL2 indisponível neste navegador.'; return; }
+  function sh(type, src){ const s = gl.createShader(type); gl.shaderSource(s, src.trim()); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); document.getElementById('hud').textContent = 'erro no shader: ' + gl.getShaderInfoLog(s); } return s; }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, document.getElementById('vs').textContent));
+  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, document.getElementById('fs').textContent));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const U = {}; ['uRes','uEll','uInc','uCamR','uFov','uExp','uTime','uDisk'].forEach(n => U[n] = gl.getUniformLocation(prog, n));
+
+  const S = { ell:0, inc:80, cam:40, fov:52, exp:0.35, q:0.6, disk:1, orbit:0 };
+  const $ = id => document.getElementById(id);
+  function bind(id, key, label, fmt){ const el = $(id); el.addEventListener('input', () => { S[key] = parseFloat(el.value); $(label).textContent = fmt(S[key]); dirty = true; }); $(label).textContent = fmt(S[key]); }
+  bind('ell','ell','vEll', v => v.toFixed(2)); bind('inc','inc','vInc', v => v.toFixed(0)); bind('cam','cam','vCam', v => v.toFixed(0));
+  bind('fov','fov','vFov', v => v.toFixed(0)); bind('exp','exp','vExp', v => v.toFixed(2)); bind('q','q','vQ', v => v.toFixed(2));
+  $('bDisk').onclick = () => { S.disk = 1 - S.disk; $('bDisk').classList.toggle('on', S.disk === 1); dirty = true; };
+  $('bOrbit').onclick = () => { S.orbit = 1 - S.orbit; $('bOrbit').classList.toggle('on', S.orbit === 1); dirty = true; };
+  function preset(ell){ S.ell = ell; $('ell').value = ell; $('vEll').textContent = ell.toFixed(2); dirty = true; describe(); }
+  $('p0').onclick = () => preset(0); $('p1').onclick = () => preset(1.0); $('p2').onclick = () => preset(2.6);
+  $('ell').addEventListener('input', describe);
+  function describe(){
+    const l = S.ell, k = $('kind');
+    if (l === 0){ k.className = 'kind s'; k.innerHTML = '<b>Schwarzschild.</b> Singularidade em r = 0. Horizonte em r = 2M. Sombra preta.'; }
+    else if (l < 2){ const rh = Math.sqrt(4 - l*l).toFixed(3); k.className = 'kind b'; k.innerHTML = `<b>Buraco negro regular com ricochete.</b> Horizontes em r = ±${rh} M. A garganta r = 0 (raio areal ℓ) leva ao universo r &lt; 0: dentro da sombra você vê o céu de lá.`; }
+    else if (l === 2){ k.className = 'kind b'; k.innerHTML = '<b>Caso extremal.</b> Horizonte único (nulo) em r = 0.'; }
+    else { k.className = 'kind w'; k.innerHTML = '<b>Buraco de minhoca atravessável.</b> Sem horizonte. Os dois universos são visíveis um do outro pela garganta.'; }
+  }
+  describe();
+
+  let dirty = true, last = performance.now(), frames = 0, t0 = performance.now();
+  function resize(){
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = Math.max(1, Math.floor(canvas.clientWidth*dpr*S.q)), h = Math.max(1, Math.floor(canvas.clientHeight*dpr*S.q));
+    if (canvas.width !== w || canvas.height !== h){ canvas.width = w; canvas.height = h; gl.viewport(0,0,w,h); dirty = true; }
+  }
+  window.addEventListener('resize', () => { dirty = true; });
+  function frame(now){
+    resize();
+    if (S.orbit){ S.inc = 60 + 28*Math.sin((now - t0)*0.00025); $('inc').value = S.inc; $('vInc').textContent = S.inc.toFixed(0); dirty = true; }
+    if (dirty){
+      gl.uniform2f(U.uRes, canvas.width, canvas.height);
+      gl.uniform1f(U.uEll, S.ell); gl.uniform1f(U.uInc, S.inc); gl.uniform1f(U.uCamR, S.cam);
+      gl.uniform1f(U.uFov, S.fov); gl.uniform1f(U.uExp, S.exp); gl.uniform1f(U.uTime, now*0.001); gl.uniform1i(U.uDisk, S.disk);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      dirty = S.orbit === 1;
+      frames++;
+      if (now - last > 1000){ $('fps').textContent = `${canvas.width}×${canvas.height} · ${(frames*1000/(now-last)).toFixed(0)} quadros/s`; frames = 0; last = now; }
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
