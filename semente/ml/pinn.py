@@ -101,19 +101,27 @@ class BouncePINN:
         fried = dw**2 - 24 * np.pi * (self.rho_m0 * w - self.sigma)
         return res, fried, w
 
-    def _loss(self, t, w_fried):
+    def _loss(self, t, w_fried, data=None, data_weight=0.0):
+        """L = L_physics + w_fried * L_vinculo (+ data_weight * L_data, modo hibrido).  L_boundary = 0 por
+        construcao (condicoes iniciais impostas exatamente na parametrizacao)."""
         res, fr, _ = self.residual(t)
-        return torch.mean(res**2) + w_fried * torch.mean(fr**2)
+        loss = torch.mean(res**2) + w_fried * torch.mean(fr**2)
+        if data is not None and data_weight > 0:
+            td, wd = data
+            loss = loss + data_weight * torch.mean((self.w(td) - wd) ** 2)
+        return loss
 
-    def train(self, epochs=3000, n_col=512, lr=3e-3, w_fried=0.1, verbose=True, lbfgs_steps=300, curriculum=True):
-        """Adam com curriculo temporal (o intervalo [0, t_k] cresce ate t_max) + refinamento L-BFGS."""
+    def train(self, epochs=3000, n_col=512, lr=3e-3, w_fried=0.1, verbose=True, lbfgs_steps=300, curriculum=True,
+              data=None, data_weight=0.0):
+        """Adam com curriculo temporal (o intervalo [0, t_k] cresce ate t_max) + refinamento L-BFGS.
+        `data = (t_pontos, w_pontos)` e `data_weight > 0` ligam o termo de dados (hibrido)."""
         opt = torch.optim.Adam(self.net.parameters(), lr=lr)
         sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, epochs)
         hist = []
         for ep in range(epochs):
             frac = min(1.0, 0.3 + ep / (0.6 * epochs)) if curriculum else 1.0
             t = torch.rand(n_col, 1) * self.t_max * frac
-            loss = self._loss(t, w_fried)
+            loss = self._loss(t, w_fried, data, data_weight)
             opt.zero_grad()
             loss.backward()
             opt.step()
@@ -128,7 +136,7 @@ class BouncePINN:
 
             def closure():
                 lb.zero_grad()
-                loss = self._loss(t.clone(), w_fried)
+                loss = self._loss(t.clone(), w_fried, data, data_weight)
                 loss.backward()
                 hist.append(loss.item())
                 return loss
