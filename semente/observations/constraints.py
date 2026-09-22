@@ -56,4 +56,6 @@ CONSTRAINTS = {
     "GW150914_Mf_Msun": Constraint("massa final GW150914", 62.0, 4.0, unit="M_sun",
                                    source="LIGO/Virgo, PRL 116, 061102 (2016)"),
     "GW150914_chi_f": Constraint("spin final GW150914", 0.67, 0.07, source="LIGO/Virgo, PRL 116, 061102 (2016)"),
+    "GW150914_z": Constraint("redshift GW150914", 0.09, 0.03, source="LIGO/Virgo, PRL 116, 061102 (2016)",
+                             note="massas no referencial do detector = massas na fonte x (1 + z)"),
 }

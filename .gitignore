@@ -8,3 +8,5 @@ output/*.json
 *.egg-info/
 build/
 dist/
+output/*.md
+output/*.meta.json
