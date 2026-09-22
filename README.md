@@ -1,6 +1,6 @@
 <div align="center">
 
-# SEMENTE · blackhole-genesis
+# SEMENTE · Singularis
 
 **Laboratório computacional de gravitação e cosmologia.**<br>
 Pergunta-guia: *sob que condições físicas um colapso gravitacional pode transitar para um ricochete cosmológico não singular, e que assinaturas observáveis distinguiriam esse cenário da formação clássica de um buraco negro?*
