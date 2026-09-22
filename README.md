@@ -79,7 +79,7 @@ O próximo teste natural (aberto no repositório) é refazer o espectro com $k=+
 
 ```bash
 pip install -r requirements.txt
-python -m pytest -q tests          # 14 testes de consistencia fisica
+python -m pytest -q tests          # 27 testes de consistencia fisica
 python scripts/run_all.py          # gera tudo em ./output (~3 min em CPU)
 ```
 
