@@ -1,0 +1,1 @@
+{"study": "qnm", "version": "1", "seed": 0, "notes": "QNM WKB do black-bounce (docs/09)", "parameters": {"M": 1.0, "spin": 0, "ell": 2, "l_values": [0.0, 0.5, 1.0, 1.5]}, "outputs": "output/studies"}

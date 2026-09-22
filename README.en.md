@@ -2,8 +2,8 @@
 
 # SEMENTE · blackhole-genesis
 
-**Every black hole carries the seed of a white hole. Every white hole is a Big Bang.**<br>
-This repository turns that sentence into solved equations, trained neural networks and computed images, without hiding where physics ends and speculation begins.
+**A computational laboratory for gravitation and cosmology.**<br>
+Guiding question: *under what physical conditions can gravitational collapse transition into a nonsingular cosmological bounce, and what observable signatures could distinguish such a scenario from classical black-hole formation?*
 
 [![Português](https://img.shields.io/badge/idioma-Português-009c3b?style=for-the-badge&logo=googletranslate&logoColor=white)](README.md)
 [![English](https://img.shields.io/badge/language-English-1f6feb?style=for-the-badge&logo=googletranslate&logoColor=white)](README.en.md)
@@ -11,21 +11,21 @@ This repository turns that sentence into solved equations, trained neural networ
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)](requirements.txt)
 [![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?logo=scipy&logoColor=white)](requirements.txt)
-[![SymPy](https://img.shields.io/badge/SymPy-3B5526?logo=sympy&logoColor=white)](semente/geodesics.py)
-[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)](semente/pinn.py)
-[![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?logo=plotly&logoColor=white)](semente/figures.py)
+[![SymPy](https://img.shields.io/badge/SymPy-3B5526?logo=sympy&logoColor=white)](semente/stability/energy_conditions.py)
+[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)](semente/ml/pinn.py)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?logo=plotly&logoColor=white)](semente/figures/)
 [![WebGL2 / GLSL](https://img.shields.io/badge/WebGL2-GLSL-990000?logo=webgl&logoColor=white)](web/index.html)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](web/index.html)
 
-[![Tests](https://img.shields.io/badge/tests-27%20passing-2ea043?logo=pytest&logoColor=white)](tests/)
+[![Tests](https://img.shields.io/badge/tests-89%20passing-2ea043?logo=pytest&logoColor=white)](tests/)
+[![Validation](https://img.shields.io/badge/validation%20registry-15%2F15-2ea043)](semente/validation.py)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
-[![Top language](https://img.shields.io/github/languages/top/naderfilho/blackhole-genesis?color=3776AB)](https://github.com/naderfilho/blackhole-genesis)
 [![Last commit](https://img.shields.io/github/last-commit/naderfilho/blackhole-genesis)](https://github.com/naderfilho/blackhole-genesis/commits/main)
 [![Stars](https://img.shields.io/github/stars/naderfilho/blackhole-genesis?style=social)](https://github.com/naderfilho/blackhole-genesis/stargazers)
 
 <img src="docs/img/bounce_sweep.gif" width="720" alt="Sweep of the ℓ parameter: from Schwarzschild to a wormhole">
 
-*Computed, not drawn: the Simpson–Visser parameter ℓ goes from 0 (Schwarzschild, black shadow) to 2.6M (traversable wormhole). In between, the sky of the other universe appears inside the "shadow", seen through the white hole.*
+*Computed, not drawn: the Simpson–Visser parameter ℓ runs from 0 (Schwarzschild) to 2.6M (traversable wormhole). In between, the sky of the other universe appears inside the "shadow" (valid for the eternal geometry).*
 
 </div>
 
@@ -34,14 +34,14 @@ This repository turns that sentence into solved equations, trained neural networ
 ## Contents
 
 - [In 30 seconds](#in-30-seconds)
-- [The idea, as a chain of facts](#the-idea-as-a-chain-of-facts)
-- [What is new: open questions](#what-is-new-experiments-on-open-questions)
-- [The model against our universe](#the-model-against-our-universe)
+- [The five categories of claim](#the-five-categories-of-claim)
+- [What the laboratory does (by study)](#what-the-laboratory-does-by-study)
+- [Main results and negative results](#main-results-and-negative-results)
+- [The model against the data](#the-model-against-the-data)
 - [Get started](#get-started)
-- [Gallery](#gallery)
+- [Reproducibility and validation](#reproducibility-and-validation)
 - [Layout](#layout)
-- [Scientific honesty](#scientific-honesty-read-before-citing)
-- [References](#references)
+- [Documentation](#documentation-portuguese)
 
 ---
 
@@ -49,93 +49,94 @@ This repository turns that sentence into solved equations, trained neural networ
 
 | | |
 |---|---|
-| **What it is** | A Python package plus a WebGL viewer that solve, numerically and with neural networks, the chain *collapse → black hole → bounce → white hole → Big Bang of another universe*. |
-| **What is new** | Three results computed here: the throat of a regular black hole is **fixed** by its interior (ℓ = R_b); under the holographic bound a tree of universes has **fewer than 5 generations**; the primordial spectrum produced by the bounce comes out with **n_s ≈ 1 without inflation**. |
-| **What it is not** | A proof. Nothing here has been observed. Every claim is labelled *theorem*, *model* or *hypothesis*. |
-| **Try it** | `python scripts/run_all.py` produces 21 figures. Open `web/index.html` and drag ℓ. |
+| **What it is** | A modular platform (Python + WebGL) to investigate gravitational collapse, black holes, regular geometries, black-bounces, white-hole transitions, Einstein–Cartan, effective LQC, cosmological bounces, baby universes, perturbations, gravitational waves, stability, thermodynamics, information and PINNs — sharing metrics, units, solvers, results, validations and figures. |
+| **What it has concluded so far** | Dust contraction inside a black hole yields a nearly scale-invariant spectrum **without inflation**, but the minimal version predicts $r = 24$ (excluded), produces **no** emergent inflation ($N<1$), is **not** robust to anisotropies and leaves **no** detectable ringdown signature. The black-bounce throat compatible with the junction is $\ell = R_b$. For dust, Einstein–Cartan and effective LQC are the same dynamics. |
+| **What it is not** | Proof of anything. Every claim carries one of the five categories below; negative results are kept. |
+| **Try it** | `python scripts/run_all.py` produces 38 figures; `python -m semente.validation` runs 15 checks; `web/index.html` is the real-time ray-tracer. |
 
 ---
 
-## The idea, as a chain of facts
+## The five categories of claim
 
-| # | claim | status | where in the code |
-|---|---|---|---|
-| 1 | The maximal extension of Schwarzschild necessarily contains a **white** hole and a second universe. | **theorem** (Kruskal 1960) | `geometry.py`, fig. 01, 02 |
-| 2 | Inside the horizon $r$ is time: the interior of a black hole **is** a cosmology (Kantowski–Sachs) lasting exactly $\pi M$. | **theorem** | `interior.py`, fig. 04 |
-| 3 | The interior of a collapsing star **is** a closed Friedmann universe in contraction (Oppenheimer–Snyder). | **theorem** (1939) | `collapse.py`, fig. 05 |
-| 4 | In a real collapse the white hole and the other universe **do not exist**: the star takes their place. | **theorem** | fig. 01 (hatched region) |
-| 5 | If the singularity is replaced by a bounce, the contraction of item 3 becomes an expansion: a Big Bang. Einstein–Cartan torsion and loop quantum cosmology do this. | **published model** (Popławski 2010; Ashtekar et al. 2006) | `bounce.py`, fig. 06 |
-| 6 | There is an exact metric (Simpson–Visser 2019) in which the black hole crosses a regular throat and exits as a white hole into **another universe**; the interior contracts to $R=\ell$ and re-expands. | **exact solution** with effective exotic matter | `geometry.py`, `raytracer.py`, `web/`, fig. 03, 04, 10, 12–15 |
-| 7 | For a parent black hole of mass $M$ one can compute the density, size and time of the child's "Big Bang". | **SEMENTE model** (this project's synthesis) | `bounce.SeedUniverse`, fig. 07 |
-| 8 | If each child inherits the parent's constants with mutations, the population of universes evolves to maximise black hole production (Smolin). | **falsifiable hypothesis** | `selection.py`, fig. 08 |
-| 9 | A neural network that only sees the equations (PINN) reconstructs the bounce with error $10^{-5}$. | **result of this project** | `pinn.py`, fig. 11 |
+| category | examples in this repository |
+|---|---|
+| **mathematical/numerical result** | Kruskal, Oppenheimer–Snyder, $\tau=\pi M$, Regge–Wheeler, Leaver QNMs |
+| **theoretical model from the literature** | Einstein–Cartan (Popławski), effective LQC (Ashtekar–Pawlowski–Singh), Simpson–Visser, charged and rotating black-bounces |
+| **speculative hypothesis** | holographic bound on the child, cosmological natural selection, baby-universe Page curve |
+| **result produced by this code** | $\ell = R_b$ from the Israel junction; EC ≡ LQC for dust; $n_s = 1.00$ through the bounce; no emergent inflation; first-law failure for SV with $S=A/4$ |
+| **possible observational connection** | $n_s$, $r$, $\alpha_s$, $\Omega_k$, GW150914, pulsar masses |
 
-<details>
-<summary><b>Kruskal diagram with the star erasing the white hole</b></summary>
-<br>
-
-![kruskal](docs/img/01_kruskal.png)
-
-The hatched region is the star's interior: there the metric is Friedmann, not Schwarzschild. In a real collapse everything to the left of the surface (regions III and IV included) is replaced by the star. The white hole exists only in the eternal vacuum solution, or if the singularity is replaced by a bounce.
-
-</details>
-
-<details>
-<summary><b>The universe inside the black hole bouncing</b></summary>
-<br>
-
-![interior](docs/img/04_interior_universo.png)
-
-</details>
-
-Full derivations in [`docs/01_matematica.md`](docs/01_matematica.md) (Portuguese).
+Mandatory language: "the model predicts", "under these assumptions", "the simulation is consistent with", "this remains speculative". Never "this proves that black holes create universes". See [docs/01_foundations.md](docs/01_foundations.md) (Portuguese).
 
 ---
 
-## What is new: experiments on open questions
+## What the laboratory does (by study)
 
-Four numerical tests run inside the models above, with results that, as far as we know, had not been computed in this form (`semente/fronteira.py`, figures 16–19, [`docs/02_fronteira.md`](docs/02_fronteira.md)).
+| # | study | module | doc | figures |
+|---|---|---|---|---|
+| 1 | Dynamic gravitational collapse (LTB; density, mass, apparent and event horizons, curvature, shell crossing), classical **or** regularized interior | `collapse/dynamic.py` | 03 | 22, 23 |
+| 2 | Dynamic black-bounce: collapse → horizon → high curvature → bounce → re-expansion; Israel junction with the exterior | `collapse/dynamic.py`, `collapse/junction.py` | 04 | 16, 22, 23 |
+| 3 | Einstein–Cartan (torsion/spin): critical density, minimum scale, curvature, GR vs EC | `quantum/einstein_cartan.py`, `quantum/comparison.py` | 05 | 06, 27, 28 |
+| 4 | Effective LQC ($H^2 = \tfrac{8\pi}{3}\rho(1-\rho/\rho_c)$), progenitor → child initial conditions | `quantum/lqc.py`, `cosmology/seed_universe.py` | 06 | 27, 28 |
+| 5 | Energy conditions NEC/WEC/SEC/DEC (symbolic Einstein tensor) for any solution | `stability/energy_conditions.py` | 07 | 24, 33 |
+| 6 | Dynamical stability: master potentials, bound-state criterion, bounce robustness to shear | `stability/perturbations.py`, `stability/bounce.py` | 07 | 25, 26 |
+| 7 | Cosmological perturbations: scalar/tensor, $n_s$, $r$, running, bridge to Planck/BICEP | `cosmology/modes.py`, `cosmology/perturbations.py` | 08 | 20, 29 |
+| 8 | Emergent expansion: $H$, $\epsilon$, e-folds, entry/exit — the code decides whether inflation occurs | `cosmology/expansion.py` | 08 | 30 |
+| 9 | Rotating geometries: Kerr (horizons, ergosphere, frame dragging, ISCO) and the rotating black-bounce | `geometry/kerr.py` | 02 | 34 |
+| 10 | Charged geometries: Reissner–Nordström and the charged black-bounce (phases in $(Q,\ell)$) | `geometry/charged.py`, `geometry/static.py` | 02 | 33 |
+| 11 | Gravitational waves: QNMs (WKB), time-domain ringdown, echoes, spectrograms, GW150914 | `gravitational_waves/` | 09 | 31, 32 |
+| 12 | Thermodynamics: $S=A/4$, $T$, first law (Schwarzschild, RN, Kerr, SV), apparent vs event horizon in collapse | `thermodynamics/horizon.py` | 10 | 35 |
+| 13 | Information (exploratory): evaporation, Page curves, baby-universe scenario, timescales | `information/page_curve.py` | 11 | 36 |
+| 14 | PINNs: analytical vs solver vs network; error, conservation, constraint, seed stability, hybrid mode | `ml/pinn.py`, `ml/benchmarks.py` | 12 | 11, 38 |
+| 15 | Parameter space: 1D/2D scans, seeded Monte Carlo, adaptive refinement, classification | `parameter_space/explorer.py` | 13 | 37 |
+| 16 | Observational bridge: MODEL / PREDICTION / CONSTRAINT / RESIDUAL / UNCERTAINTY / SOURCE | `observations/` | 14 | tables |
+| 17 | Automated validation: dimensional, limits, conservation, convergence, stability, benchmarks | `semente/validation.py` | 01 | JSON report |
+| 18 | Reproducibility: configs, seeds, provenance (commit, versions, solver, timestamp) on every figure and JSON | `core/provenance.py`, `core/config.py`, `configs/` | 01 | footers |
 
-| # | open question | what the test found |
+The original studies (Kruskal, Schwarzschild interior, Oppenheimer–Snyder, SEMENTE model, cosmological selection, ray-tracing) remain in docs/01_matematica, 02_fronteira and 03_nascimento (Portuguese).
+
+<details>
+<summary><b>Dynamic collapse: classical vs bounce</b></summary>
+<br>
+
+![collapse](docs/img/22_colapso_dinamico.png)
+
+</details>
+
+---
+
+## Main results and negative results
+
+| result | category | where |
 |---|---|---|
-| A | What happens **outside** the star when the interior bounces? | The Israel junction with Schwarzschild is impossible in a finite interval around the bounce. Within the black-bounce family **only ℓ = R_b** works: $\ell^3 = 3M/4\pi\rho_b$. For 10 M☉, ℓ ≈ 5×10⁻¹⁰ m; the wall between the universes weighs $R_b c^2/G \approx 7\times10^{17}$ kg. |
-| B | Does the parent's horizon bound the child's entropy? | If so, the parent of our universe had ≥ 5×10¹³ M☉ and a tree of universes with our fecundity has **fewer than 5 generations**. |
-| C | Does cosmological natural selection work under that bound? | No: effective fecundity drops to ~1 child per universe and the dynamics becomes neutral drift. **CNS and holography are nearly incompatible.** |
-| D | Does Smolin's prediction (neutron star M_max ≈ 1.6 M☉) survive the data? | Excluded at > 4σ by four pulsars; the revised version (2 M☉) is at the edge. |
-
-<details>
-<summary><b>The junction figure (why only ℓ = R_b works)</b></summary>
-<br>
-
-![juncao](docs/img/16_fronteira_juncao.png)
-
-</details>
-
-Each result depends on an explicit assumption (effective treatment of torsion; holographic bound). That is where physics is undecided, which is why these are tests, not theorems.
+| The interior of a collapsing star is a contracting Friedmann universe; Kruskal's white hole is erased by the collapse | mathematical result | 01, fig. 01, 05 |
+| Only $\ell = R_b$ (throat = bounce radius) admits the Israel junction; the wall weighs $R_b c^2/G$ | result of this code | 02_fronteira, fig. 16 |
+| For dust, Einstein–Cartan and effective LQC are identical ($\rho_c \leftrightarrow \rho_b$); they differ for radiation | result of this code | 05, 06, fig. 27 |
+| Regularized collapse: **transient** trapped region (τ ∈ [23.7, 26.6] M), quasi-local mass drops to 5% at the bounce, event horizon undecided | result of this code | 03, 04, fig. 22 |
+| Test-field spectrum through the bounce: $n_s = 1.00$ without inflation (Wands mechanism) | result of this code | 08, fig. 29 |
+| **Negative:** $r = 24$ vs $r < 0.036$: minimal scenario excluded | code + observation | 08, 14 |
+| **Negative:** no emergent inflation ($N<1$ e-fold, independent of $\rho_*$) | result of this code | 08, fig. 30 |
+| **Negative:** isotropic bounce not robust to shear for stellar contraction ratios | result of this code | 07, fig. 26 |
+| **Negative:** with $\ell = R_b$ the QNM shift is $<10^{-6}$; echoes only for $\ell > 2M$ | result of this code | 09, fig. 31, 32 |
+| SV: $S = A/4$ is independent of $\ell$ and the first law fails by $1-\sqrt{1-\ell^2/4M^2}$ | result of this code | 10, fig. 35 |
+| Test fields on black-bounces are linearly stable (no bound state) | numerical result | 07, fig. 25 |
+| Under the holographic bound the tree of universes has < 5 generations and selection becomes drift | speculative hypothesis → computed consequence | 02_fronteira, fig. 17, 18 |
 
 ---
 
-## The model against our universe
+## The model against the data
 
-Nothing confirms that we were born from a black hole. What can be done is the consistency test: the model predicts properties of the child universe; we measure ours (Planck 2018, BICEP/Keck 2021); we compare (`semente/nascimento.py`, figures 20–21, [`docs/03_nascimento.md`](docs/03_nascimento.md)).
+| model | prediction | observed | residual | status |
+|---|---|---|---|---|
+| dust + torsion | $n_s = 1.01 \pm 0.02$ | 0.9665 ± 0.0038 | +2.4σ | tension |
+| dust + torsion | $r = 24$ | < 0.036 | ×670 | **excluded** |
+| radiation + LQC | $n_s = 2.9$ | 0.9665 | +20σ | **excluded** |
+| closed interior | $\Omega_k < 0$ | 0.0007 ± 0.0019 / −0.011 ± 0.0065 | ≤ 1.7σ | consistent, falsifiable |
+| Schwarzschild, non-rotating | $f_{\rm ringdown}$ = 179 Hz | 251 ± 8 Hz (GW150914) | −5σ | excluded (rotation) |
+| Kerr χ = 0.67 (literature) | 250 Hz, 4.0 ms | 251 ± 8 Hz, 4.0 ± 0.3 ms | 0.1σ | literature:consistent |
+| Smolin (1992) | $M_{\max,NS}$ ≈ 1.6 M☉ | 2.08 ± 0.07 M☉ | > 4σ | **excluded** |
 
-| model prediction | predicted | observed | verdict |
-|---|---|---|---|
-| Primordial spectrum (Mukhanov–Sasaki through the bounce, Bunch–Davies vacuum in the dust contraction) | $n_s = 1.004$, < 1% variation over 1.2 decades | $n_s = 0.9665 \pm 0.0038$ | **compatible**: near scale invariance **without inflation** |
-| Curvature: the child is closed | $\Omega_k < 0$ | Planck+BAO $0.0007\pm0.0019$; Planck alone $-0.011\pm0.0065$ | **compatible**, falsifiable |
-| Parent mass (curvature + conservation) | $\ge 4.7\times10^{23}\,M_\odot$ | mass of the observable universe ~ $10^{23}\,M_\odot$ | consistent (not evidence) |
-| Tensor-to-scalar ratio of the minimal matter bounce | $r = 24$ | $r < 0.036$ | **falsified** in the minimal version |
-| Accelerated expansion | not predicted | $\Lambda$ dominates | not predicted |
-
-<details>
-<summary><b>The primordial spectrum coming out of the bounce</b></summary>
-<br>
-
-![espectro](docs/img/20_nascimento_espectro.png)
-
-</details>
-
-**Score:** four compatible, one falsified, one not predicted. The model is **alive and constrained**. The natural next test (open in this repository) is to redo the spectrum with $k=+1$ and with tensor modes, to see whether $r$ drops.
+"consistent" only means "not excluded". Full table in docs/14.
 
 ---
 
@@ -145,86 +146,22 @@ Nothing confirms that we were born from a black hole. What can be done is the co
 git clone https://github.com/naderfilho/blackhole-genesis.git
 cd blackhole-genesis
 pip install -r requirements.txt
-python -m pytest -q tests          # 27 physical-consistency tests
-python scripts/run_all.py          # 21 figures + renders in ./output (~4 min on CPU)
+python -m pytest -q tests                # 89 tests (limits, conservation, convergence, benchmarks)
+python -m semente.validation             # registry of 15 checks -> output/validation_report.json
+python scripts/run_all.py                # 38 figures + JSONs with provenance in ./output
+python scripts/reproduce.py "configs/*.json"   # re-run the studies from configuration files
 ```
 
-**Real-time viewer:** open [`web/index.html`](web/index.html) in a WebGL2 browser and drag **ℓ** from 0 to 3. Every pixel integrates the exact geodesic on the GPU.
-
-<details>
-<summary><b>Use as a library</b></summary>
-<br>
-
-```python
-from semente.geometry import BlackBounce
-from semente.interior import radial_infall_black_bounce
-from semente.bounce import SeedUniverse, M_SUN
-from semente.raytracer import render, Scene, Camera, save_png
-from semente.nascimento import BounceSpectrum
-import numpy as np
-
-bb = BlackBounce(M=1.0, l=0.8)
-print(bb.kind, bb.horizons)                      # horizons at ±sqrt(4M² − ℓ²)
-q = radial_infall_black_bounce(l=0.8, r0=8.0)    # r(τ) crosses r = 0 and emerges on the other side
-print(SeedUniverse(10 * M_SUN).table())          # the child universe of a 10 solar-mass black hole
-save_png(render(Scene(l=0.8), Camera(width=960, height=540)), "my_black_hole.png")
-
-bs = BounceSpectrum(a_b=0.05)                    # primordial spectrum through the bounce
-ks = np.logspace(-0.7, 0.3, 8)
-print(bs.spectral_index(ks, bs.spectrum(ks)))    # ≈ 1.00
-```
-
-</details>
-
-<details>
-<summary><b>Run only part of it</b></summary>
-<br>
-
-```bash
-python scripts/run_all.py --sem-render      # scientific figures only (~1 min)
-python scripts/run_all.py --rapido          # renders at 640x360
-python -m semente.figures_fronteira         # open-question experiments only
-python -m semente.figures_nascimento        # verdict vs Planck/BICEP only
-```
-
-</details>
+Real-time viewer: [`web/index.html`](web/index.html) (WebGL2).
 
 ---
 
-## Gallery
+## Reproducibility and validation
 
-<details>
-<summary><b>Full list of the 21 figures</b></summary>
-<br>
-
-| file | content |
-|---|---|
-| `01_kruskal.png` | The four Kruskal regions, the Oppenheimer–Snyder star (which erases the white hole) and an infalling observer. |
-| `02_penrose.png` | Penrose diagram of eternal Schwarzschild and the black-bounce "ladder" of universes. |
-| `03_flamm_wormhole.png` | Flamm's paraboloid (Einstein–Rosen bridge) and the smooth throat of a wormhole. |
-| `04_interior_universo.png` | Scale factors of the universe inside the black hole; with bounce; finite Kretschmann; infall through the throat. |
-| `05_colapso_oppenheimer_snyder.png` | Collapse: surface, event horizon born at the centre, FRW $a(\tau)$ and its time-reversed version. |
-| `06_ricochete.png` | Pure GR vs torsion vs LQC: $a(t)$, $H(t)$, effective density. Exact solution overlaid. |
-| `07_tabela_universo_filho.png/.json` | Child-universe properties for parents from 3 to 6.5×10⁹ solar masses. |
-| `08_selecao_cosmologica.png` | Cosmological natural selection: mean fecundity and population migration on the landscape. |
-| `09_deflexao.png` | Light deflection angle vs impact parameter; divergence at the photon sphere. |
-| `10_geodesicas.png` | Photon and particle orbits (general integrator with symbolic Christoffel symbols). |
-| `11_pinn.png` | PINN vs integrator: bounce and photon orbit. |
-| `12–15_render_*.png` | Ray-tracer: Schwarzschild, black-bounce, wormhole, lensing seen from above. |
-| `16_fronteira_juncao.png` | Israel junction of the bounce: where Schwarzschild fails, why only ℓ = R_b works, predicted ℓ vs mass. |
-| `17_fronteira_entropia.png` | Parent-mass floor from the entropy bound; maximum depth of the tree of universes. |
-| `18_fronteira_selecao_orcamento.png` | Smolin's selection with a holographic budget: effective fecundity collapses to ~1. |
-| `19_fronteira_estrelas_neutrons.png` | Pulsar masses vs Smolin's prediction. |
-| `20_nascimento_espectro.png` | Mukhanov–Sasaki through the bounce: potential, spectrum with n_s ≈ 1, freezing modes. |
-| `21_nascimento_veredito.png` | Parent mass vs observed curvature and the verdict table. |
-
-</details>
-
-<div align="center">
-<img src="docs/img/13_render_black_bounce.png" width="720" alt="Black-bounce render">
-
-*Regular black hole (ℓ = 1M) with a Page–Thorne accretion disk. Exact geodesics, gravitational + Doppler redshift, blackbody colour. The only aesthetic freedom is the disk temperature.*
-</div>
+- Every figure carries a footer with model, parameters, package version, commit and date; every result JSON has a `.meta.json` (`RunRecord`: parameters, solver, seed, numpy/scipy/sympy/torch versions, platform, timestamp).
+- `configs/*.json` describe studies; `scripts/reproduce.py` re-runs them.
+- `semente/validation.py` is the auditable registry: units, limits ($\ell\to0$, $\sigma\to0$, $\rho_c\to\infty$, $\rho_*\to\infty$), conservation (Friedmann constraint, Misner–Sharp mass), convergence (shells, grid), stability, analytical benchmarks (exact solution, Oppenheimer–Snyder, Leaver).
+- One integrator (`core/solvers.py`) with recorded tolerances.
 
 ---
 
@@ -232,58 +169,32 @@ python -m semente.figures_nascimento        # verdict vs Planck/BICEP only
 
 ```
 semente/
-  geometry.py          Schwarzschild, Kruskal (Lambert W), Penrose, Flamm, black-bounce, Kretschmann
-  geodesics.py         Christoffel via sympy -> DOP853 integrator; orbital form u(phi); deflection
-  interior.py          Kantowski-Sachs inside the BH; interior bounce; infall through the throat
-  collapse.py          Oppenheimer-Snyder: FRW/Schwarzschild junction, event horizon, Kruskal surface
-  bounce.py            Friedmann with torsion (+ exact solution), LQC, SEMENTE model, Pathria
-  selection.py         Smolin's population dynamics
-  pinn.py              PINNs (torch): bounce in the volume variable; photon orbit
-  raytracer.py         numpy ray-tracer: Page-Thorne (closed form), redshift, lensing, two skies
-  fronteira.py         experiments on open questions  (+ figures_fronteira.py)
-  nascimento.py        child-universe predictions vs Planck/BICEP  (+ figures_nascimento.py)
-  figures.py           all figures
-web/index.html         real-time WebGL2 ray-tracer (GLSL)
-tests/                 27 tests
-docs/                  derivations (01), open questions (02), birth (03)
+  core/            units, provenance, single solver, study configs
+  geometry/        generic static family, Schwarzschild/Kruskal/Penrose, SV, RN, charged, Kerr, geodesics, interior
+  collapse/        Oppenheimer-Snyder, dynamic collapse (LTB + bounce), Israel junction
+  quantum/         Einstein-Cartan, effective LQC, comparison
+  cosmology/       unified Friedmann, modes, expansion, curvature, seed universe, selection
+  stability/       energy conditions, master potentials, bounce robustness
+  gravitational_waves/  QNM (WKB), time-domain ringdown, echoes
+  thermodynamics/  horizons, genealogy
+  information/     Page curves (EXPLORATORY)
+  ml/              PINNs, benchmarks
+  raytracing/      images (CPU)          web/index.html: real-time GPU
+  observations/    sourced constraints, observational bridge, pulsars
+  parameter_space/ scans, Monte Carlo, adaptive, classification
+  figures/         all visualisation
+  validation.py    check registry
+configs/           reproducible studies      scripts/   run_all, reproduce
+tests/             89 tests                  docs/      00-15 + the three original documents
 ```
 
----
-
-## Scientific honesty (read before citing)
-
-- Items 1–4 of the chain are **theorems** of general relativity. Item 4 is what most popular accounts omit: Kruskal's white hole is erased by the collapse.
-- Items 5–6 are **models**: they depend on physics beyond classical relativity. They are exact solutions *of those models' equations*, not observations.
-- The argument "the Schwarzschild radius of the observable universe equals its size" is an **identity** of the Friedmann equation for a flat universe ($r_s = c/H_0$ exactly), not evidence.
-- The minimal SEMENTE model produces a **small, short-lived** child universe and predicts $r = 24$, excluded by data. Turning it into a universe like ours needs extra physics. The verdict table says so with numbers.
-- Nothing here has been observed. White holes have never been detected.
+The old modules (`semente.geometry`, `semente.bounce`, `semente.fronteira`, `semente.nascimento`, ...) remain importable as facades.
 
 ---
 
-## References
+## Documentation (Portuguese)
 
-<details>
-<summary><b>Show references</b></summary>
-<br>
-
-- Oppenheimer, J. R. & Snyder, H. (1939). *On Continued Gravitational Contraction.* Phys. Rev. 56, 455.
-- Kruskal, M. (1960). Phys. Rev. 119, 1743. Szekeres, G. (1960). Publ. Math. Debrecen 7, 285.
-- Novikov, I. (1964). *Delayed explosion of a part of the Fridman universe and quasars.* Astron. Zh. 41, 1075.
-- Pathria, R. K. (1972). *The Universe as a Black Hole.* Nature 240, 298.
-- Page, D. N. & Thorne, K. S. (1974). *Disk-Accretion onto a Black Hole.* ApJ 191, 499.
-- Frolov, V., Markov, M. & Mukhanov, V. (1990). *Black holes as possible sources of closed and semiclosed worlds.* Phys. Rev. D 41, 383.
-- Smolin, L. (1992). *Did the universe evolve?* Class. Quantum Grav. 9, 173.
-- Wands, D. (1999). *Duality invariance of cosmological perturbation spectra.* Phys. Rev. D 60, 023507.
-- Ashtekar, A., Pawlowski, T. & Singh, P. (2006). *Quantum nature of the Big Bang.* Phys. Rev. Lett. 96, 141301.
-- Popławski, N. (2010). *Cosmology with torsion: An alternative to cosmic inflation.* Phys. Lett. B 694, 181.
-- Popławski, N. (2012). *Nonsingular, big-bounce cosmology from spinor-torsion coupling.* Phys. Rev. D 85, 107502.
-- Haggard, H. & Rovelli, C. (2015). *Black hole fireworks.* Phys. Rev. D 92, 104020.
-- Ashtekar, A., Olmedo, J. & Singh, P. (2018). *Quantum Transfiguration of Kruskal Black Holes.* Phys. Rev. Lett. 121, 241301.
-- Simpson, A. & Visser, M. (2019). *Black-bounce to traversable wormhole.* JCAP 02, 042.
-- Raissi, M., Perdikaris, P. & Karniadakis, G. (2019). *Physics-informed neural networks.* J. Comput. Phys. 378, 686.
-- Planck Collaboration (2020). *Planck 2018 results. VI.* A&A 641, A6. BICEP/Keck (2021). Phys. Rev. Lett. 127, 151301.
-
-</details>
+00 audit · 01 foundations · 02 geometries · 03 collapse · 04 black-bounce · 05 Einstein–Cartan · 06 LQC · 07 stability · 08 perturbations · 09 gravitational waves · 10 thermodynamics · 11 information · 12 PINN · 13 parameter space · 14 observational constraints · 15 limitations — all under [`docs/`](docs/). Each document has: objective, mathematical formulation, assumptions, numerical method, parameters, validation, results, limitations, references.
 
 <div align="center">
 

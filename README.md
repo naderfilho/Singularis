@@ -2,8 +2,8 @@
 
 # SEMENTE · blackhole-genesis
 
-**Todo buraco negro guarda a semente de um buraco branco. Todo buraco branco é um Big Bang.**<br>
-Este repositório transforma essa frase em equações resolvidas, redes neurais treinadas e imagens calculadas, sem esconder onde a física termina e a especulação começa.
+**Laboratório computacional de gravitação e cosmologia.**<br>
+Pergunta-guia: *sob que condições físicas um colapso gravitacional pode transitar para um ricochete cosmológico não singular, e que assinaturas observáveis distinguiriam esse cenário da formação clássica de um buraco negro?*
 
 [![Português](https://img.shields.io/badge/idioma-Português-009c3b?style=for-the-badge&logo=googletranslate&logoColor=white)](README.md)
 [![English](https://img.shields.io/badge/language-English-1f6feb?style=for-the-badge&logo=googletranslate&logoColor=white)](README.en.md)
@@ -11,21 +11,21 @@ Este repositório transforma essa frase em equações resolvidas, redes neurais 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)](requirements.txt)
 [![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?logo=scipy&logoColor=white)](requirements.txt)
-[![SymPy](https://img.shields.io/badge/SymPy-3B5526?logo=sympy&logoColor=white)](semente/geodesics.py)
-[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)](semente/pinn.py)
-[![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?logo=plotly&logoColor=white)](semente/figures.py)
+[![SymPy](https://img.shields.io/badge/SymPy-3B5526?logo=sympy&logoColor=white)](semente/stability/energy_conditions.py)
+[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)](semente/ml/pinn.py)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?logo=plotly&logoColor=white)](semente/figures/)
 [![WebGL2 / GLSL](https://img.shields.io/badge/WebGL2-GLSL-990000?logo=webgl&logoColor=white)](web/index.html)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](web/index.html)
 
-[![Tests](https://img.shields.io/badge/tests-27%20passing-2ea043?logo=pytest&logoColor=white)](tests/)
+[![Tests](https://img.shields.io/badge/tests-89%20passing-2ea043?logo=pytest&logoColor=white)](tests/)
+[![Validation](https://img.shields.io/badge/validation%20registry-15%2F15-2ea043)](semente/validation.py)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
-[![Top language](https://img.shields.io/github/languages/top/naderfilho/blackhole-genesis?color=3776AB)](https://github.com/naderfilho/blackhole-genesis)
 [![Last commit](https://img.shields.io/github/last-commit/naderfilho/blackhole-genesis)](https://github.com/naderfilho/blackhole-genesis/commits/main)
 [![Stars](https://img.shields.io/github/stars/naderfilho/blackhole-genesis?style=social)](https://github.com/naderfilho/blackhole-genesis/stargazers)
 
 <img src="docs/img/bounce_sweep.gif" width="720" alt="Varredura do parâmetro ℓ: de Schwarzschild a buraco de minhoca">
 
-*Animação calculada, não desenhada: o parâmetro ℓ de Simpson–Visser vai de 0 (Schwarzschild, sombra preta) até 2.6M (buraco de minhoca). Entre os dois, dentro da "sombra" aparece o céu do outro universo, visto através do buraco branco.*
+*Calculado, não desenhado: o parâmetro ℓ de Simpson–Visser vai de 0 (Schwarzschild) até 2.6M (buraco de minhoca). Entre os dois, dentro da "sombra" aparece o céu do outro universo (válido na geometria eterna).*
 
 </div>
 
@@ -34,13 +34,14 @@ Este repositório transforma essa frase em equações resolvidas, redes neurais 
 ## Índice
 
 - [Em 30 segundos](#em-30-segundos)
-- [A ideia, em uma cadeia de fatos](#a-ideia-em-uma-cadeia-de-fatos)
-- [O diferencial: perguntas em aberto](#o-diferencial-experimentos-sobre-perguntas-em-aberto)
-- [O modelo contra o nosso universo](#o-modelo-contra-o-nosso-universo)
+- [As cinco categorias de afirmação](#as-cinco-categorias-de-afirmação)
+- [O que o laboratório faz (por estudo)](#o-que-o-laboratório-faz-por-estudo)
+- [Resultados principais e resultados negativos](#resultados-principais-e-resultados-negativos)
+- [O modelo contra os dados](#o-modelo-contra-os-dados)
 - [Comece aqui](#comece-aqui)
-- [Galeria](#galeria)
+- [Reprodutibilidade e validação](#reprodutibilidade-e-validação)
 - [Estrutura](#estrutura)
-- [Honestidade científica](#honestidade-científica-leia-antes-de-citar)
+- [Documentação](#documentação)
 - [Referências](#referências)
 
 ---
@@ -49,93 +50,94 @@ Este repositório transforma essa frase em equações resolvidas, redes neurais 
 
 | | |
 |---|---|
-| **O que é** | Um pacote Python + um visualizador WebGL que resolvem, numericamente e com redes neurais, a cadeia *colapso → buraco negro → ricochete → buraco branco → Big Bang de outro universo*. |
-| **O que tem de novo** | Três resultados calculados aqui: a garganta do buraco negro regular fica **fixada** pelo interior (ℓ = R_b); sob o limite holográfico a árvore de universos tem **< 5 gerações**; o espectro primordial gerado pelo ricochete sai com **n_s ≈ 1 sem inflação**. |
-| **O que não é** | Uma prova. Nada aqui foi observado. Cada afirmação está rotulada como *teorema*, *modelo* ou *hipótese*. |
-| **Experimente** | `python scripts/run_all.py` gera 21 figuras. Abra `web/index.html` e arraste ℓ. |
+| **O que é** | Uma plataforma modular (Python + WebGL) para investigar colapso gravitacional, buracos negros, geometrias regulares, black-bounces, transições para buraco branco, Einstein–Cartan, LQC efetiva, ricochetes cosmológicos, universos-filhos, perturbações, ondas gravitacionais, estabilidade, termodinâmica, informação e PINNs — com métricas, unidades, solvers, resultados, validações e figuras compartilhados. |
+| **O que ela concluiu até agora** | A contração de poeira dentro de um buraco negro produz um espectro quase invariante de escala **sem inflação**, mas a versão mínima prevê $r = 24$ (excluído), **não** gera inflação emergente ($N<1$), **não** é robusta a anisotropias e **não** deixa assinatura de ringdown detectável. A garganta do black-bounce compatível com a junção é $\ell = R_b$. Para poeira, Einstein–Cartan e LQC efetiva são a mesma dinâmica. |
+| **O que não é** | Uma prova de nada. Cada afirmação carrega uma das cinco categorias abaixo; resultados negativos são preservados. |
+| **Experimente** | `python scripts/run_all.py` gera 38 figuras; `python -m semente.validation` roda 15 verificações; `web/index.html` é o ray-tracer em tempo real. |
 
 ---
 
-## A ideia, em uma cadeia de fatos
+## As cinco categorias de afirmação
 
-| # | afirmação | status | onde no código |
-|---|---|---|---|
-| 1 | A extensão maximal de Schwarzschild contém, obrigatoriamente, um buraco **branco** e um segundo universo. | **teorema** (Kruskal 1960) | `geometry.py`, fig. 01, 02 |
-| 2 | Dentro do horizonte, $r$ é tempo: o interior de um buraco negro **é** uma cosmologia (Kantowski–Sachs) que dura exatamente $\pi M$. | **teorema** | `interior.py`, fig. 04 |
-| 3 | O interior de uma estrela em colapso **é** um universo de Friedmann fechado em contração (Oppenheimer–Snyder). | **teorema** (1939) | `collapse.py`, fig. 05 |
-| 4 | Num colapso real, o buraco branco e o outro universo **não existem**: a estrela ocupa o lugar deles. | **teorema** | fig. 01 (região hachurada) |
-| 5 | Se a singularidade for substituída por um ricochete, a contração do item 3 vira uma expansão: um Big Bang. Torção de Einstein–Cartan e cosmologia quântica de laço fazem isso. | **modelo publicado** (Popławski 2010; Ashtekar et al. 2006) | `bounce.py`, fig. 06 |
-| 6 | Existe uma métrica exata (Simpson–Visser 2019) em que o buraco negro atravessa uma garganta regular e sai como buraco branco em **outro universo**; o interior contrai até $R=\ell$ e re-expande. | **solução exata** com matéria efetiva exótica | `geometry.py`, `raytracer.py`, `web/`, fig. 03, 04, 10, 12–15 |
-| 7 | Para um buraco negro pai de massa $M$, dá para calcular densidade, tamanho e tempo do "Big Bang" do filho. | **modelo SEMENTE** (síntese deste projeto) | `bounce.SeedUniverse`, fig. 07 |
-| 8 | Se cada filho herda as constantes do pai com mutações, a população de universos evolui para maximizar a produção de buracos negros (Smolin). | **hipótese falsificável** | `selection.py`, fig. 08 |
-| 9 | Uma rede neural que só vê as equações (PINN) reconstrói o ricochete com erro $10^{-5}$. | **resultado deste projeto** | `pinn.py`, fig. 11 |
+| categoria | exemplo neste repositório |
+|---|---|
+| **resultado matemático/numérico** | Kruskal, Oppenheimer–Snyder, $\tau=\pi M$, Regge–Wheeler, QNMs de Leaver |
+| **modelo teórico da literatura** | Einstein–Cartan (Popławski), LQC efetiva (Ashtekar–Pawlowski–Singh), Simpson–Visser, black-bounce carregado e rotativo |
+| **hipótese especulativa** | limite holográfico no filho, seleção cosmológica, curva de Page do universo-filho |
+| **resultado produzido por este código** | $\ell = R_b$ pela junção de Israel; EC ≡ LQC para poeira; $n_s = 1.00$ pelo ricochete; ausência de inflação emergente; falha da primeira lei em SV com $S=A/4$ |
+| **conexão observacional possível** | $n_s$, $r$, $\alpha_s$, $\Omega_k$, GW150914, massas de pulsares |
 
-<details>
-<summary><b>Ver o diagrama de Kruskal com a estrela apagando o buraco branco</b></summary>
-<br>
-
-![kruskal](docs/img/01_kruskal.png)
-
-A região hachurada é o interior da estrela: lá a métrica é Friedmann, não Schwarzschild. Num colapso real, tudo à esquerda da superfície (inclusive as regiões III e IV) é substituído pela estrela. O buraco branco só existe na solução de vácuo eterna, ou se a singularidade for substituída por um ricochete.
-
-</details>
-
-<details>
-<summary><b>Ver o universo dentro do buraco negro ricocheteando</b></summary>
-<br>
-
-![interior](docs/img/04_interior_universo.png)
-
-</details>
-
-Derivações completas em [`docs/01_matematica.md`](docs/01_matematica.md).
+Linguagem obrigatória: "o modelo prevê", "sob estas hipóteses", "a simulação é consistente com", "permanece especulativo". Nunca "isto prova que buracos negros criam universos". Ver [docs/01_foundations.md](docs/01_foundations.md).
 
 ---
 
-## O diferencial: experimentos sobre perguntas em aberto
+## O que o laboratório faz (por estudo)
 
-Quatro testes numéricos feitos dentro dos modelos acima, com resultados que, até onde sabemos, não estavam calculados nesta forma (`semente/fronteira.py`, figuras 16–19, [`docs/02_fronteira.md`](docs/02_fronteira.md)).
+| # | estudo | módulo | doc | figuras |
+|---|---|---|---|---|
+| 1 | Colapso gravitacional dinâmico (LTB; densidade, massa, horizontes aparente e de eventos, curvatura, shell crossing), interior clássico **ou** regularizado | `collapse/dynamic.py` | [03](docs/03_gravitational_collapse.md) | 22, 23 |
+| 2 | Black-bounce dinâmico: colapso → horizonte → alta curvatura → ricochete → re-expansão; junção de Israel com o exterior | `collapse/dynamic.py`, `collapse/junction.py` | [04](docs/04_black_bounce.md) | 16, 22, 23 |
+| 3 | Einstein–Cartan (torção/spin): densidade crítica, escala mínima, curvatura, GR vs EC | `quantum/einstein_cartan.py`, `quantum/comparison.py` | [05](docs/05_einstein_cartan.md) | 06, 27, 28 |
+| 4 | LQC efetiva ($H^2 = \tfrac{8\pi}{3}\rho(1-\rho/\rho_c)$), progenitor → condições iniciais do filho | `quantum/lqc.py`, `cosmology/seed_universe.py` | [06](docs/06_loop_quantum_cosmology.md) | 27, 28 |
+| 5 | Condições de energia NEC/WEC/SEC/DEC (tensor de Einstein simbólico) para qualquer solução | `stability/energy_conditions.py` | [07](docs/07_stability.md) | 24, 33 |
+| 6 | Estabilidade dinâmica: potenciais mestres, critério de estado ligado, robustez do ricochete a cisalhamento | `stability/perturbations.py`, `stability/bounce.py` | [07](docs/07_stability.md) | 25, 26 |
+| 7 | Perturbações cosmológicas: escalares/tensoriais, $n_s$, $r$, running, ponte com Planck/BICEP | `cosmology/modes.py`, `cosmology/perturbations.py` | [08](docs/08_cosmological_perturbations.md) | 20, 29 |
+| 8 | Expansão emergente: $H$, $\epsilon$, e-folds, entrada/saída — o código decide se há inflação | `cosmology/expansion.py` | [08](docs/08_cosmological_perturbations.md) | 30 |
+| 9 | Geometrias rotativas: Kerr (horizontes, ergosfera, arrasto, ISCO) e black-bounce rotativo | `geometry/kerr.py` | [02](docs/02_geometry.md) | 34 |
+| 10 | Geometrias carregadas: Reissner–Nordström e black-bounce carregado (fases em $(Q,\ell)$) | `geometry/charged.py`, `geometry/static.py` | [02](docs/02_geometry.md) | 33 |
+| 11 | Ondas gravitacionais: QNMs (WKB), ringdown no domínio do tempo, ecos, espectrogramas, GW150914 | `gravitational_waves/` | [09](docs/09_gravitational_waves.md) | 31, 32 |
+| 12 | Termodinâmica: $S=A/4$, $T$, primeira lei (Schwarzschild, RN, Kerr, SV), horizonte aparente vs de eventos no colapso | `thermodynamics/horizon.py` | [10](docs/10_thermodynamics.md) | 35 |
+| 13 | Informação (exploratório): evaporação, curvas de Page, cenário universo-filho, escalas de tempo | `information/page_curve.py` | [11](docs/11_information.md) | 36 |
+| 14 | PINNs: analítico vs solver vs rede; erro, conservação, vínculo, estabilidade entre sementes, modo híbrido | `ml/pinn.py`, `ml/benchmarks.py` | [12](docs/12_pinn.md) | 11, 38 |
+| 15 | Espaço de parâmetros: varreduras 1D/2D, Monte Carlo com semente, refinamento adaptativo, classificação | `parameter_space/explorer.py` | [13](docs/13_parameter_space.md) | 37 |
+| 16 | Ponte observacional: MODEL / PREDICTION / CONSTRAINT / RESIDUAL / UNCERTAINTY / SOURCE | `observations/` | [14](docs/14_observational_constraints.md) | tabelas |
+| 17 | Validação automatizada: dimensional, limites, conservação, convergência, estabilidade, benchmarks | `semente/validation.py` | [01](docs/01_foundations.md) | relatório JSON |
+| 18 | Reprodutibilidade: configs, sementes, proveniência (commit, versões, solver, timestamp) em cada figura e JSON | `core/provenance.py`, `core/config.py`, `configs/` | [01](docs/01_foundations.md) | rodapés |
 
-| # | pergunta aberta | o que o teste encontrou |
+Os estudos originais (Kruskal, interior de Schwarzschild, Oppenheimer–Snyder, modelo SEMENTE, seleção cosmológica, ray-tracing) continuam em [docs/01_matematica.md](docs/01_matematica.md), [docs/02_fronteira.md](docs/02_fronteira.md) e [docs/03_nascimento.md](docs/03_nascimento.md).
+
+<details>
+<summary><b>Ver o colapso dinâmico: clássico vs ricochete</b></summary>
+<br>
+
+![colapso](docs/img/22_colapso_dinamico.png)
+
+</details>
+
+---
+
+## Resultados principais e resultados negativos
+
+| resultado | categoria | onde |
 |---|---|---|
-| A | O que acontece **fora** da estrela quando o interior ricocheteia? | A junção de Israel com Schwarzschild é impossível num intervalo finito em torno do ricochete. Na família black-bounce, **só ℓ = R_b** funciona: $\ell^3 = 3M/4\pi\rho_b$. Para 10 M☉, ℓ ≈ 5×10⁻¹⁰ m; a parede entre os universos pesa $R_b c^2/G \approx 7\times10^{17}$ kg. |
-| B | O horizonte do pai limita a entropia do filho? | Se sim, o pai do nosso universo tinha ≥ 5×10¹³ M☉ e uma árvore de universos com a nossa fecundidade tem **menos de 5 gerações**. |
-| C | A seleção natural cosmológica funciona com esse limite? | Não: a fecundidade efetiva cai para ~1 filho por universo e a dinâmica vira deriva neutra. **CNS e holografia são quase incompatíveis.** |
-| D | A previsão de Smolin (M_max de estrelas de nêutrons ≈ 1.6 M☉) sobrevive aos dados? | Excluída por > 4σ em quatro pulsares; a versão revisada (2 M☉) está no limite. |
-
-<details>
-<summary><b>Ver a figura da junção (por que só ℓ = R_b funciona)</b></summary>
-<br>
-
-![juncao](docs/img/16_fronteira_juncao.png)
-
-</details>
-
-Cada resultado depende de uma hipótese explícita (tratamento efetivo da torção; limite holográfico). É onde a física está indecisa, e por isso são testes, não teoremas.
+| Interior de uma estrela em colapso = universo de Friedmann em contração; o buraco branco de Kruskal é apagado pelo colapso | resultado matemático | 01, fig. 01, 05 |
+| Só $\ell = R_b$ (garganta = raio do ricochete) admite a junção de Israel; a parede pesa $R_b c^2/G$ | resultado deste código | 02_fronteira, fig. 16 |
+| Para poeira, Einstein–Cartan e LQC efetiva são idênticas ($\rho_c \leftrightarrow \rho_b$); diferem para radiação | resultado deste código | 05, 06, fig. 27 |
+| Colapso regularizado: região presa **transiente** (τ ∈ [23.7, 26.6] M), massa quasi-local cai a 5% no ricochete, sem horizonte de eventos decidido | resultado deste código | 03, 04, fig. 22 |
+| Espectro do campo de teste através do ricochete: $n_s = 1.00$, sem inflação (mecanismo de Wands) | resultado deste código | 08, fig. 29 |
+| **Negativo:** $r = 24$ vs $r < 0.036$: cenário mínimo excluído | resultado deste código + observação | 08, 14 |
+| **Negativo:** nenhuma inflação emergente ($N<1$ e-fold, independente de $\rho_*$) | resultado deste código | 08, fig. 30 |
+| **Negativo:** ricochete isotrópico não robusto a cisalhamento para razões de contração estelares | resultado deste código | 07, fig. 26 |
+| **Negativo:** com $\ell = R_b$ o desvio de QNM é $<10^{-6}$; ecos só em $\ell > 2M$ | resultado deste código | 09, fig. 31, 32 |
+| SV: $S = A/4$ independe de $\ell$ e a primeira lei falha por $1-\sqrt{1-\ell^2/4M^2}$ | resultado deste código | 10, fig. 35 |
+| Campos de teste em black-bounces são linearmente estáveis (sem estado ligado) | resultado numérico | 07, fig. 25 |
+| Sob o limite holográfico, a árvore de universos tem < 5 gerações e a seleção cosmológica vira deriva | hipótese especulativa → consequência calculada | 02_fronteira, fig. 17, 18 |
 
 ---
 
-## O modelo contra o nosso universo
+## O modelo contra os dados
 
-Nada confirma que nascemos de um buraco negro. O que dá para fazer é o teste de consistência: o modelo prevê propriedades do universo-filho; medimos o nosso (Planck 2018, BICEP/Keck 2021); comparamos (`semente/nascimento.py`, figuras 20–21, [`docs/03_nascimento.md`](docs/03_nascimento.md)).
+| modelo | previsão | observado | residual | status |
+|---|---|---|---|---|
+| poeira + torção | $n_s = 1.01 \pm 0.02$ | 0.9665 ± 0.0038 | +2.4σ | tension |
+| poeira + torção | $r = 24$ | < 0.036 | ×670 | **excluded** |
+| radiação + LQC | $n_s = 2.9$ | 0.9665 | +20σ | **excluded** |
+| interior fechado | $\Omega_k < 0$ | 0.0007 ± 0.0019 / −0.011 ± 0.0065 | ≤ 1.7σ | consistent, falsificável |
+| Schwarzschild sem rotação | $f_{\rm ringdown}$ = 179 Hz | 251 ± 8 Hz (GW150914) | −5σ | excluded (rotação) |
+| Kerr χ = 0.67 (literatura) | 250 Hz, 4.0 ms | 251 ± 8 Hz, 4.0 ± 0.3 ms | 0.1σ | literature:consistent |
+| Smolin (1992) | $M_{\max,NS}$ ≈ 1.6 M☉ | 2.08 ± 0.07 M☉ | > 4σ | **excluded** |
 
-| previsão do modelo | previsto | observado | veredito |
-|---|---|---|---|
-| Espectro primordial (Mukhanov–Sasaki através do ricochete, vácuo de Bunch–Davies na contração de poeira) | $n_s = 1.004$, < 1% de variação em 1.2 décadas | $n_s = 0.9665 \pm 0.0038$ | **compatível**: quase-invariância de escala **sem inflação** |
-| Curvatura: o filho é fechado | $\Omega_k < 0$ | Planck+BAO $0.0007\pm0.0019$; Planck só $-0.011\pm0.0065$ | **compatível**, falsificável |
-| Massa do pai (curvatura + conservação) | $\ge 4.7\times10^{23}\,M_\odot$ | massa do universo observável ~ $10^{23}\,M_\odot$ | consistente (não é evidência) |
-| Razão tensor/escalar do ricochete de matéria mínimo | $r = 24$ | $r < 0.036$ | **falsificado** na versão mínima |
-| Expansão acelerada | não prevista | $\Lambda$ domina | não previsto |
-
-<details>
-<summary><b>Ver o espectro primordial saindo do ricochete</b></summary>
-<br>
-
-![espectro](docs/img/20_nascimento_espectro.png)
-
-</details>
-
-**Placar:** quatro compatíveis, um falsificado, um não previsto. O modelo está **vivo e restrito**. O próximo teste natural (aberto neste repositório) é refazer o espectro com $k=+1$ e com os tensores, para ver se $r$ cai.
+"consistent" significa apenas "não excluído". Tabela completa em [docs/14](docs/14_observational_constraints.md).
 
 ---
 
@@ -145,86 +147,49 @@ Nada confirma que nascemos de um buraco negro. O que dá para fazer é o teste d
 git clone https://github.com/naderfilho/blackhole-genesis.git
 cd blackhole-genesis
 pip install -r requirements.txt
-python -m pytest -q tests          # 27 testes de consistência física
-python scripts/run_all.py          # gera 21 figuras + renders em ./output (~4 min em CPU)
+python -m pytest -q tests                # 89 testes (limites, conservacao, convergencia, benchmarks)
+python -m semente.validation             # registro de 15 verificacoes -> output/validation_report.json
+python scripts/run_all.py                # 38 figuras + JSONs com proveniencia em ./output
+python scripts/reproduce.py "configs/*.json"   # reexecuta os estudos a partir de configuracoes
 ```
 
-**Visualizador em tempo real:** abra [`web/index.html`](web/index.html) num navegador com WebGL2 e arraste **ℓ** de 0 até 3. Cada pixel integra a geodésica exata na GPU.
+Visualizador em tempo real: [`web/index.html`](web/index.html) (WebGL2).
 
 <details>
 <summary><b>Usar como biblioteca</b></summary>
 <br>
 
 ```python
-from semente.geometry import BlackBounce
-from semente.interior import radial_infall_black_bounce
-from semente.bounce import SeedUniverse, M_SUN
-from semente.raytracer import render, Scene, Camera, save_png
-from semente.nascimento import BounceSpectrum
+from semente.collapse.dynamic import compare_classical_vs_bounce
+from semente.cosmology.friedmann import einstein_cartan_dust
+from semente.cosmology.modes import ModeSolver, bounce_background
+from semente.stability import static_metric_report, analyze, simpson_visser_metric
+from semente.gravitational_waves import wkb3, evolve
+from semente.parameter_space import monte_carlo, classify_bounce
 import numpy as np
 
-bb = BlackBounce(M=1.0, l=0.8)
-print(bb.kind, bb.horizons)                      # horizontes em ±sqrt(4M² − ℓ²)
-q = radial_infall_black_bounce(l=0.8, r0=8.0)    # r(τ) atravessa r = 0 e emerge no outro lado
-print(SeedUniverse(10 * M_SUN).table())          # o universo-filho de um BN de 10 massas solares
-save_png(render(Scene(l=0.8), Camera(width=960, height=540)), "meu_buraco.png")
+classico, ricochete = compare_classical_vs_bounce(M=1.0, R0=8.0, Rb_over_R0=0.05)
+print(ricochete.summary()["tau_last_trapped"])          # regiao presa transiente
 
-bs = BounceSpectrum(a_b=0.05)                    # espectro primordial através do ricochete
-ks = np.logspace(-0.7, 0.3, 8)
-print(bs.spectral_index(ks, bs.spectrum(ks)))    # ≈ 1.00
-```
+sol = bounce_background(einstein_cartan_dust(1.0, 0.05**3))
+print(ModeSolver(sol).spectrum(np.logspace(-0.7, 0, 6)).n_s)   # ~1.00
 
-</details>
-
-<details>
-<summary><b>Rodar só uma parte</b></summary>
-<br>
-
-```bash
-python scripts/run_all.py --sem-render      # só as figuras científicas (~1 min)
-python scripts/run_all.py --rapido          # renders em 640x360
-python -m semente.figures_fronteira         # só os experimentos de fronteira
-python -m semente.figures_nascimento        # só o veredito vs Planck/BICEP
+print(static_metric_report("simpson_visser", np.linspace(-6, 6, 300), M=1, l=0.5).summary()["NEC"])
+print(analyze(simpson_visser_metric(1, 0.5), spin=0).classification)   # stable
+print(wkb3(simpson_visser_metric(1, 0.5), spin=0, ell=2).omega)
+print(monte_carlo(classify_bounce, dict(rho_star=(2, 1e3), sigma0_sq=(1e-6, 10)), n=20, seed=1, log_scale=("rho_star", "sigma0_sq")).labels)
 ```
 
 </details>
 
 ---
 
-## Galeria
+## Reprodutibilidade e validação
 
-<details>
-<summary><b>Ver a lista completa das 21 figuras</b></summary>
-<br>
-
-| arquivo | conteúdo |
-|---|---|
-| `01_kruskal.png` | As quatro regiões de Kruskal, a estrela de Oppenheimer–Snyder (que apaga o buraco branco) e um observador em queda. |
-| `02_penrose.png` | Penrose de Schwarzschild eterno e a "escada" de universos do black-bounce. |
-| `03_flamm_wormhole.png` | Paraboloide de Flamm (ponte de Einstein–Rosen) e a garganta lisa de um buraco de minhoca. |
-| `04_interior_universo.png` | Os fatores de escala do universo dentro do buraco negro; com ricochete; Kretschmann finito; queda através da garganta. |
-| `05_colapso_oppenheimer_snyder.png` | Colapso: superfície, horizonte de eventos nascendo no centro, $a(\tau)$ FRW e sua versão com tempo invertido. |
-| `06_ricochete.png` | GR pura vs torção vs LQC: $a(t)$, $H(t)$, densidade efetiva. Solução exata sobreposta. |
-| `07_tabela_universo_filho.png/.json` | Propriedades do universo-filho para pais de 3 a 6.5×10⁹ massas solares. |
-| `08_selecao_cosmologica.png` | Seleção natural cosmológica: fecundidade média e migração da população na paisagem. |
-| `09_deflexao.png` | Ângulo de deflexão da luz vs parâmetro de impacto; divergência na esfera de fótons. |
-| `10_geodesicas.png` | Órbitas de fótons e partículas (integrador geral com Christoffel simbólico). |
-| `11_pinn.png` | PINN vs integrador: ricochete e órbita de fóton. |
-| `12–15_render_*.png` | Ray-tracer: Schwarzschild, black-bounce, buraco de minhoca, lente vista de cima. |
-| `16_fronteira_juncao.png` | Junção de Israel do ricochete: onde Schwarzschild falha, por que só ℓ = R_b funciona, ℓ previsto vs massa. |
-| `17_fronteira_entropia.png` | Piso de massa do pai pelo limite entrópico; profundidade máxima da árvore de universos. |
-| `18_fronteira_selecao_orcamento.png` | Seleção de Smolin com orçamento holográfico: a fecundidade efetiva colapsa para ~1. |
-| `19_fronteira_estrelas_neutrons.png` | Massas de pulsares vs previsão de Smolin. |
-| `20_nascimento_espectro.png` | Mukhanov–Sasaki através do ricochete: potencial, espectro com n_s ≈ 1, modos congelando. |
-| `21_nascimento_veredito.png` | Massa do pai vs curvatura observada e a tabela de vereditos. |
-
-</details>
-
-<div align="center">
-<img src="docs/img/13_render_black_bounce.png" width="720" alt="Render do black-bounce">
-
-*Buraco negro regular (ℓ = 1M) com disco de acreção de Page–Thorne. Geodésicas exatas, redshift gravitacional + Doppler, cor de corpo negro. A única liberdade estética é a temperatura do disco.*
-</div>
+- Cada figura tem um rodapé com modelo, parâmetros, versão do pacote, commit e data; cada JSON de resultado tem um `.meta.json` (`RunRecord`: parâmetros, solver, semente, versões de numpy/scipy/sympy/torch, plataforma, timestamp).
+- `configs/*.json` descrevem estudos; `scripts/reproduce.py` os reexecuta.
+- `semente/validation.py` é o registro auditável: unidades, limites ($\ell\to0$, $\sigma\to0$, $\rho_c\to\infty$, $\rho_*\to\infty$), conservação (vínculo de Friedmann, massa de Misner–Sharp), convergência (camadas, grade), estabilidade, benchmarks analíticos (solução exata, Oppenheimer–Snyder, Leaver).
+- Um único integrador (`core/solvers.py`) com tolerâncias registradas.
 
 ---
 
@@ -232,31 +197,34 @@ python -m semente.figures_nascimento        # só o veredito vs Planck/BICEP
 
 ```
 semente/
-  geometry.py          Schwarzschild, Kruskal (Lambert W), Penrose, Flamm, black-bounce, Kretschmann
-  geodesics.py         Christoffel via sympy -> integrador DOP853; forma orbital u(phi); deflexão
-  interior.py          Kantowski-Sachs dentro do BN; ricochete do interior; queda pela garganta
-  collapse.py          Oppenheimer-Snyder: junção FRW/Schwarzschild, horizonte de eventos, Kruskal da superfície
-  bounce.py            Friedmann com torção (+ solução exata), LQC, modelo SEMENTE, Pathria
-  selection.py         dinâmica populacional de Smolin
-  pinn.py              PINNs (torch): ricochete na variável de volume; órbita de fóton
-  raytracer.py         ray-tracer numpy: Page-Thorne (forma fechada), redshift, lente, dois céus
-  fronteira.py         experimentos sobre perguntas em aberto  (+ figures_fronteira.py)
-  nascimento.py        previsões para o universo-filho vs Planck/BICEP  (+ figures_nascimento.py)
-  figures.py           todas as figuras
-web/index.html         ray-tracer WebGL2 em tempo real (GLSL)
-tests/                 27 testes
-docs/                  derivações (01), fronteira (02), nascimento (03)
+  core/            unidades, proveniencia, solver unico, configuracoes de estudo
+  geometry/        familia estatica generica, Schwarzschild/Kruskal/Penrose, SV, RN, carregado, Kerr, geodesicas, interior
+  collapse/        Oppenheimer-Snyder, colapso dinamico (LTB + ricochete), juncao de Israel
+  quantum/         Einstein-Cartan, LQC efetiva, comparacao
+  cosmology/       Friedmann unificado, modos, expansao, curvatura, universo-filho, selecao
+  stability/       condicoes de energia, potenciais mestres, robustez do ricochete
+  gravitational_waves/  QNM (WKB), ringdown no tempo, ecos
+  thermodynamics/  horizontes, genealogia
+  information/     curvas de Page (EXPLORATORIO)
+  ml/              PINNs, benchmarks
+  raytracing/      imagens (CPU)         web/index.html: GPU em tempo real
+  observations/    restricoes com fonte, ponte observacional, pulsares
+  parameter_space/ varreduras, Monte Carlo, adaptativo, classificacao
+  figures/         toda a visualizacao
+  validation.py    registro de verificacoes
+configs/           estudos reprodutiveis       scripts/   run_all, reproduce
+tests/             89 testes                   docs/      00-15 + os tres documentos originais
 ```
+
+Os módulos antigos (`semente.geometry`, `semente.bounce`, `semente.fronteira`, `semente.nascimento`, ...) continuam importáveis como fachadas.
 
 ---
 
-## Honestidade científica (leia antes de citar)
+## Documentação
 
-- Itens 1–4 da cadeia são **teoremas** da relatividade geral. O item 4 é o que a maioria das divulgações omite: o buraco branco de Kruskal é apagado pelo colapso.
-- Itens 5–6 são **modelos**: dependem de física além da relatividade clássica. São soluções exatas *das equações desses modelos*, não observações.
-- O argumento "o raio de Schwarzschild do universo observável é igual ao seu tamanho" é uma **identidade** da equação de Friedmann para universo plano ($r_s = c/H_0$ exatamente), não uma evidência.
-- O modelo SEMENTE mínimo gera um universo-filho **pequeno e efêmero** e prevê $r = 24$, excluído pelos dados. Para virar um universo como o nosso precisa de física extra. A tabela do veredito diz isso com números.
-- Nada aqui foi observado. Buracos brancos nunca foram detectados.
+[00 auditoria](docs/00_audit.md) · [01 fundamentos](docs/01_foundations.md) · [02 geometrias](docs/02_geometry.md) · [03 colapso](docs/03_gravitational_collapse.md) · [04 black-bounce](docs/04_black_bounce.md) · [05 Einstein–Cartan](docs/05_einstein_cartan.md) · [06 LQC](docs/06_loop_quantum_cosmology.md) · [07 estabilidade](docs/07_stability.md) · [08 perturbações](docs/08_cosmological_perturbations.md) · [09 ondas gravitacionais](docs/09_gravitational_waves.md) · [10 termodinâmica](docs/10_thermodynamics.md) · [11 informação](docs/11_information.md) · [12 PINN](docs/12_pinn.md) · [13 espaço de parâmetros](docs/13_parameter_space.md) · [14 restrições observacionais](docs/14_observational_constraints.md) · [15 limitações](docs/15_limitations.md)
+
+Cada documento tem: objetivo, formulação matemática, hipóteses, método numérico, parâmetros, validação, resultados, limitações, referências.
 
 ---
 
@@ -266,22 +234,17 @@ docs/                  derivações (01), fronteira (02), nascimento (03)
 <summary><b>Ver as referências</b></summary>
 <br>
 
-- Oppenheimer, J. R. & Snyder, H. (1939). *On Continued Gravitational Contraction.* Phys. Rev. 56, 455.
-- Kruskal, M. (1960). Phys. Rev. 119, 1743. Szekeres, G. (1960). Publ. Math. Debrecen 7, 285.
-- Novikov, I. (1964). *Delayed explosion of a part of the Fridman universe and quasars.* Astron. Zh. 41, 1075.
-- Pathria, R. K. (1972). *The Universe as a Black Hole.* Nature 240, 298.
-- Page, D. N. & Thorne, K. S. (1974). *Disk-Accretion onto a Black Hole.* ApJ 191, 499.
-- Frolov, V., Markov, M. & Mukhanov, V. (1990). *Black holes as possible sources of closed and semiclosed worlds.* Phys. Rev. D 41, 383.
-- Smolin, L. (1992). *Did the universe evolve?* Class. Quantum Grav. 9, 173.
-- Wands, D. (1999). *Duality invariance of cosmological perturbation spectra.* Phys. Rev. D 60, 023507.
-- Ashtekar, A., Pawlowski, T. & Singh, P. (2006). *Quantum nature of the Big Bang.* Phys. Rev. Lett. 96, 141301.
-- Popławski, N. (2010). *Cosmology with torsion: An alternative to cosmic inflation.* Phys. Lett. B 694, 181.
-- Popławski, N. (2012). *Nonsingular, big-bounce cosmology from spinor-torsion coupling.* Phys. Rev. D 85, 107502.
-- Haggard, H. & Rovelli, C. (2015). *Black hole fireworks.* Phys. Rev. D 92, 104020.
-- Ashtekar, A., Olmedo, J. & Singh, P. (2018). *Quantum Transfiguration of Kruskal Black Holes.* Phys. Rev. Lett. 121, 241301.
-- Simpson, A. & Visser, M. (2019). *Black-bounce to traversable wormhole.* JCAP 02, 042.
-- Raissi, M., Perdikaris, P. & Karniadakis, G. (2019). *Physics-informed neural networks.* J. Comput. Phys. 378, 686.
-- Planck Collaboration (2020). *Planck 2018 results. VI.* A&A 641, A6. BICEP/Keck (2021). Phys. Rev. Lett. 127, 151301.
+- Oppenheimer & Snyder (1939) Phys. Rev. 56, 455. Kruskal (1960) Phys. Rev. 119, 1743. Misner & Sharp (1964) Phys. Rev. 136, B571.
+- Regge & Wheeler (1957) PR 108, 1063. Bardeen, Press & Teukolsky (1972) ApJ 178, 347. Bardeen, Carter & Hawking (1973) CMP 31, 161.
+- Page & Thorne (1974) ApJ 191, 499. Hawking (1975) CMP 43, 199. Page (1993) PRL 71, 3743. Leaver (1985) Proc. R. Soc. A 402, 285. Iyer & Will (1987) PRD 35, 3621.
+- Frolov, Markov & Mukhanov (1990) PRD 41, 383. Smolin (1992) CQG 9, 173. Hayward (1994) PRD 49, 6467. Wands (1999) PRD 60, 023507.
+- Ashtekar, Pawlowski & Singh (2006) PRL 96, 141301. Berti, Cardoso & Will (2006) PRD 73, 064030. Bojowald, Harada & Tibrewala (2008) PRD 78, 064057.
+- Popławski (2010) PLB 694, 181; (2012) PRD 85, 107502. Cai, Xue, Brandenberger & Zhang (2009) JCAP 05, 011. Bronnikov, Konoplya & Zhidenko (2012) PRD 86, 024028.
+- Haggard & Rovelli (2015) PRD 92, 104020. Cardoso, Franzin & Pani (2016) PRL 116, 171101. Brandenberger & Peter (2017) Found. Phys. 47, 797.
+- Ashtekar, Olmedo & Singh (2018) PRL 121, 241301. Simpson & Visser (2019) JCAP 02, 042. Raissi, Perdikaris & Karniadakis (2019) J. Comput. Phys. 378, 686.
+- Kelly, Santacruz & Wilson-Ewing (2020) PRD 102, 106024. Churilova & Stuchlík (2020) CQG 37, 075014. Planck 2018 VI, IX, X (2020) A&A 641.
+- Franzin, Liberati, Mazza, Simpson & Visser (2021) JCAP 07, 036. Mazza, Franzin & Liberati (2021) JCAP 04, 082. BICEP/Keck (2021) PRL 127, 151301. Almheiri et al. (2021) RMP 93, 035002.
+- LIGO/Virgo (2016) PRL 116, 061102; 221101. Fonseca et al. (2021) ApJL 915, L12. Egan & Lineweaver (2010) ApJ 710, 1825.
 
 </details>
 

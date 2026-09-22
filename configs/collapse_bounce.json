@@ -1,0 +1,1 @@
+{"study": "collapse", "version": "1", "seed": 0, "notes": "colapso homogeneo classico vs ricochete (docs/03, 04)", "parameters": {"M": 1.0, "R0": 8.0, "Rb_over_R0": 0.05, "n_shells": 40, "profile": "homogeneous"}, "outputs": "output/studies"}

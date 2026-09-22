@@ -1,0 +1,1 @@
+{"study": "parameter_scan", "version": "1", "seed": 11, "notes": "Monte Carlo do ricochete LQC (docs/13)", "parameters": {"classifier": "bounce", "bounds": {"rho_star": [1.5, 10000.0], "sigma0_sq": [1e-9, 100.0]}, "n": 60, "log_scale": ["rho_star", "sigma0_sq"]}, "outputs": "output/studies"}

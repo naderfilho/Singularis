@@ -10,3 +10,5 @@ build/
 dist/
 output/*.md
 output/*.meta.json
+output/studies/
+output/validation_report*.json

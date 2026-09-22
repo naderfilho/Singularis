@@ -1,0 +1,1 @@
+{"study": "spectrum", "version": "1", "seed": 0, "notes": "espectro do campo de teste atraves do ricochete de torcao (docs/08)", "parameters": {"a_b": 0.05, "a0": 20000.0, "n_per_side": 60000, "log10_k": [-0.7, 0.0], "n_k": 6}, "outputs": "output/studies"}

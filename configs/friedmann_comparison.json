@@ -1,0 +1,1 @@
+{"study": "friedmann", "version": "1", "seed": 0, "notes": "GR vs Einstein-Cartan vs LQC, poeira (docs/05, 06)", "parameters": {"rho0": 1.0, "w": 0.0, "rho_star": 20.0, "t_span": [0.0, 1.5], "sigma0_sq": 1e-6}, "outputs": "output/studies"}
