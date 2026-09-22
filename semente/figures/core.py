@@ -16,14 +16,14 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 from matplotlib.patches import Polygon  # noqa: E402
 
-from .bounce import (LQCCosmology, SeedUniverse, TorsionCosmology, classical_collapse_reference,  # noqa: E402
+from ..bounce import (LQCCosmology, SeedUniverse, TorsionCosmology, classical_collapse_reference,  # noqa: E402
                      observable_universe_as_black_hole, torsion_dust_exact, M_SUN)
-from .collapse import OppenheimerSnyder  # noqa: E402
-from .geodesics import GeodesicSolver, deflection_angle  # noqa: E402
-from .geometry import BlackBounce, Schwarzschild, penrose_from_kruskal  # noqa: E402
-from .interior import (kantowski_sachs_black_bounce, kantowski_sachs_schwarzschild,  # noqa: E402
+from ..collapse import OppenheimerSnyder  # noqa: E402
+from ..geodesics import GeodesicSolver, deflection_angle  # noqa: E402
+from ..geometry import BlackBounce, Schwarzschild, penrose_from_kruskal  # noqa: E402
+from ..interior import (kantowski_sachs_black_bounce, kantowski_sachs_schwarzschild,  # noqa: E402
                        radial_infall_black_bounce)
-from .selection import CosmicSelection, fecundity_landscape  # noqa: E402
+from ..selection import CosmicSelection, fecundity_landscape  # noqa: E402
 
 OUT = "output"
 DARK = "#0b0d12"
@@ -441,7 +441,7 @@ def fig_geodesic_gallery():
     ax.fill(2 * np.cos(th), 2 * np.sin(th), color="black")
     ax.plot(3 * np.cos(th), 3 * np.sin(th), color=C_SING, ls=":", lw=1, label="esfera de fotons r=3M")
     ax.plot(6 * np.cos(th), 6 * np.sin(th), color=C_OUR, ls=":", lw=1, label="ISCO r=6M")
-    from .geodesics import orbit_rhs_null
+    from ..geometry.geodesics import orbit_rhs_null
     for b, col in [(5.3, "#ff9f1c"), (5.6, "#ffd166"), (7.0, "#7bd389"), (10.0, "#40e0d0"), (15.0, "#c77dff")]:
         u, up, phi = 0.0, 1 / b, 0.0
         us, ps = [], []
@@ -489,7 +489,7 @@ def fig_geodesic_gallery():
 
 def fig_pinn():
     try:
-        from .pinn import BouncePINN, PhotonOrbitPINN, reference_photon_orbit
+        from ..ml.pinn import BouncePINN, PhotonOrbitPINN, reference_photon_orbit
     except ImportError:
         print("  (torch ausente: pulando figura da PINN)")
         return None
@@ -533,7 +533,7 @@ def fig_pinn():
 
 
 def renders(width=1280, height=720):
-    from .raytracer import Camera, Scene, render, save_png
+    from ..raytracing.raytracer import Camera, Scene, render, save_png
     os.makedirs(OUT, exist_ok=True)
     paths = []
     for l, name, title in [(0.0, "12_render_schwarzschild.png", "Schwarzschild"),
@@ -570,9 +570,9 @@ def make_all(with_renders=True, render_size=(1280, 720)):
     fig_pinn()
     if with_renders:
         renders(*render_size)
-    from .figures_fronteira import make_all as fronteira
+    from .fronteira import make_all as fronteira
     fronteira()
-    from .figures_nascimento import make_all as nascimento
+    from .nascimento import make_all as nascimento
     nascimento()
     info = observable_universe_as_black_hole()
     with open(os.path.join(OUT, "universo_observavel_como_buraco_negro.json"), "w", encoding="utf-8") as fh:

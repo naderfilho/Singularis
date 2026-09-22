@@ -22,7 +22,7 @@ from dataclasses import dataclass
 import numpy as np
 from scipy.integrate import cumulative_trapezoid
 
-from .geometry import Schwarzschild
+from ..geometry.spherical import Schwarzschild
 
 
 @dataclass
