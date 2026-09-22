@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌌 SEMENTE · blackhole-genesis
+# SEMENTE · blackhole-genesis
 
 **Every black hole carries the seed of a white hole. Every white hole is a Big Bang.**<br>
 This repository turns that sentence into solved equations, trained neural networks and computed images, without hiding where physics ends and speculation begins.
@@ -31,21 +31,21 @@ This repository turns that sentence into solved equations, trained neural networ
 
 ---
 
-## 📑 Contents
+## Contents
 
-- [In 30 seconds](#-in-30-seconds)
-- [The idea, as a chain of facts](#-the-idea-as-a-chain-of-facts)
-- [What is new: open questions](#-what-is-new-experiments-on-open-questions)
-- [The model against our universe](#-the-model-against-our-universe)
-- [Get started](#-get-started)
-- [Gallery](#%EF%B8%8F-gallery)
-- [Layout](#%EF%B8%8F-layout)
-- [Scientific honesty](#%EF%B8%8F-scientific-honesty-read-before-citing)
-- [References](#-references)
+- [In 30 seconds](#in-30-seconds)
+- [The idea, as a chain of facts](#the-idea-as-a-chain-of-facts)
+- [What is new: open questions](#what-is-new-experiments-on-open-questions)
+- [The model against our universe](#the-model-against-our-universe)
+- [Get started](#get-started)
+- [Gallery](#gallery)
+- [Layout](#layout)
+- [Scientific honesty](#scientific-honesty-read-before-citing)
+- [References](#references)
 
 ---
 
-## ⚡ In 30 seconds
+## In 30 seconds
 
 | | |
 |---|---|
@@ -56,7 +56,7 @@ This repository turns that sentence into solved equations, trained neural networ
 
 ---
 
-## 🧭 The idea, as a chain of facts
+## The idea, as a chain of facts
 
 | # | claim | status | where in the code |
 |---|---|---|---|
@@ -71,7 +71,7 @@ This repository turns that sentence into solved equations, trained neural networ
 | 9 | A neural network that only sees the equations (PINN) reconstructs the bounce with error $10^{-5}$. | **result of this project** | `pinn.py`, fig. 11 |
 
 <details>
-<summary><b>📐 Kruskal diagram with the star erasing the white hole</b></summary>
+<summary><b> Kruskal diagram with the star erasing the white hole</b></summary>
 <br>
 
 ![kruskal](docs/img/01_kruskal.png)
@@ -81,7 +81,7 @@ The hatched region is the star's interior: there the metric is Friedmann, not Sc
 </details>
 
 <details>
-<summary><b>🕳️ The universe inside the black hole bouncing</b></summary>
+<summary><b> The universe inside the black hole bouncing</b></summary>
 <br>
 
 ![interior](docs/img/04_interior_universo.png)
@@ -92,19 +92,19 @@ Full derivations in [`docs/01_matematica.md`](docs/01_matematica.md) (Portuguese
 
 ---
 
-## 🔬 What is new: experiments on open questions
+## What is new: experiments on open questions
 
 Four numerical tests run inside the models above, with results that, as far as we know, had not been computed in this form (`semente/fronteira.py`, figures 16–19, [`docs/02_fronteira.md`](docs/02_fronteira.md)).
 
 | # | open question | what the test found |
 |---|---|---|
-| A | What happens **outside** the star when the interior bounces? | The Israel junction with Schwarzschild is impossible in a finite interval around the bounce. Within the black-bounce family **only ℓ = R_b** works: $\ell^3 = 3M/4\pi\rho_b$. For 10 M☉, ℓ ≈ 5×10⁻¹⁰ m; the wall between the universes weighs $R_b c^2/G \approx 7\times10^{17}$ kg. |
-| B | Does the parent's horizon bound the child's entropy? | If so, the parent of our universe had ≥ 5×10¹³ M☉ and a tree of universes with our fecundity has **fewer than 5 generations**. |
+| A | What happens **outside** the star when the interior bounces? | The Israel junction with Schwarzschild is impossible in a finite interval around the bounce. Within the black-bounce family **only ℓ = R_b** works: $\ell^3 = 3M/4\pi\rho_b$. For 10 M, ℓ ≈ 5×10⁻¹⁰ m; the wall between the universes weighs $R_b c^2/G \approx 7\times10^{17}$ kg. |
+| B | Does the parent's horizon bound the child's entropy? | If so, the parent of our universe had ≥ 5×10¹³ M and a tree of universes with our fecundity has **fewer than 5 generations**. |
 | C | Does cosmological natural selection work under that bound? | No: effective fecundity drops to ~1 child per universe and the dynamics becomes neutral drift. **CNS and holography are nearly incompatible.** |
-| D | Does Smolin's prediction (neutron star M_max ≈ 1.6 M☉) survive the data? | Excluded at > 4σ by four pulsars; the revised version (2 M☉) is at the edge. |
+| D | Does Smolin's prediction (neutron star M_max ≈ 1.6 M) survive the data? | Excluded at > 4σ by four pulsars; the revised version (2 M) is at the edge. |
 
 <details>
-<summary><b>📊 The junction figure (why only ℓ = R_b works)</b></summary>
+<summary><b> The junction figure (why only ℓ = R_b works)</b></summary>
 <br>
 
 ![juncao](docs/img/16_fronteira_juncao.png)
@@ -115,20 +115,20 @@ Each result depends on an explicit assumption (effective treatment of torsion; h
 
 ---
 
-## 🌍 The model against our universe
+## The model against our universe
 
 Nothing confirms that we were born from a black hole. What can be done is the consistency test: the model predicts properties of the child universe; we measure ours (Planck 2018, BICEP/Keck 2021); we compare (`semente/nascimento.py`, figures 20–21, [`docs/03_nascimento.md`](docs/03_nascimento.md)).
 
 | model prediction | predicted | observed | verdict |
 |---|---|---|---|
-| Primordial spectrum (Mukhanov–Sasaki through the bounce, Bunch–Davies vacuum in the dust contraction) | $n_s = 1.004$, < 1% variation over 1.2 decades | $n_s = 0.9665 \pm 0.0038$ | 🟢 **compatible**: near scale invariance **without inflation** |
-| Curvature: the child is closed | $\Omega_k < 0$ | Planck+BAO $0.0007\pm0.0019$; Planck alone $-0.011\pm0.0065$ | 🟢 **compatible**, falsifiable |
-| Parent mass (curvature + conservation) | $\ge 4.7\times10^{23}\,M_\odot$ | mass of the observable universe ~ $10^{23}\,M_\odot$ | 🟡 consistent (not evidence) |
-| Tensor-to-scalar ratio of the minimal matter bounce | $r = 24$ | $r < 0.036$ | 🔴 **falsified** in the minimal version |
-| Accelerated expansion | not predicted | $\Lambda$ dominates | ⚪ not predicted |
+| Primordial spectrum (Mukhanov–Sasaki through the bounce, Bunch–Davies vacuum in the dust contraction) | $n_s = 1.004$, < 1% variation over 1.2 decades | $n_s = 0.9665 \pm 0.0038$ | **compatible**: near scale invariance **without inflation** |
+| Curvature: the child is closed | $\Omega_k < 0$ | Planck+BAO $0.0007\pm0.0019$; Planck alone $-0.011\pm0.0065$ | **compatible**, falsifiable |
+| Parent mass (curvature + conservation) | $\ge 4.7\times10^{23}\,M_\odot$ | mass of the observable universe ~ $10^{23}\,M_\odot$ | consistent (not evidence) |
+| Tensor-to-scalar ratio of the minimal matter bounce | $r = 24$ | $r < 0.036$ | **falsified** in the minimal version |
+| Accelerated expansion | not predicted | $\Lambda$ dominates | not predicted |
 
 <details>
-<summary><b>📈 The primordial spectrum coming out of the bounce</b></summary>
+<summary><b> The primordial spectrum coming out of the bounce</b></summary>
 <br>
 
 ![espectro](docs/img/20_nascimento_espectro.png)
@@ -139,7 +139,7 @@ Nothing confirms that we were born from a black hole. What can be done is the co
 
 ---
 
-## 🚀 Get started
+## Get started
 
 ```bash
 git clone https://github.com/naderfilho/blackhole-genesis.git
@@ -152,7 +152,7 @@ python scripts/run_all.py          # 21 figures + renders in ./output (~4 min on
 **Real-time viewer:** open [`web/index.html`](web/index.html) in a WebGL2 browser and drag **ℓ** from 0 to 3. Every pixel integrates the exact geodesic on the GPU.
 
 <details>
-<summary><b>🐍 Use as a library</b></summary>
+<summary><b> Use as a library</b></summary>
 <br>
 
 ```python
@@ -177,7 +177,7 @@ print(bs.spectral_index(ks, bs.spectrum(ks)))    # ≈ 1.00
 </details>
 
 <details>
-<summary><b>🧪 Run only part of it</b></summary>
+<summary><b> Run only part of it</b></summary>
 <br>
 
 ```bash
@@ -191,7 +191,7 @@ python -m semente.figures_nascimento        # verdict vs Planck/BICEP only
 
 ---
 
-## 🖼️ Gallery
+## Gallery
 
 <details>
 <summary><b>Full list of the 21 figures</b></summary>
@@ -228,7 +228,7 @@ python -m semente.figures_nascimento        # verdict vs Planck/BICEP only
 
 ---
 
-## 🗂️ Layout
+## Layout
 
 ```
 semente/
@@ -250,7 +250,7 @@ docs/                  derivations (01), open questions (02), birth (03)
 
 ---
 
-## ⚖️ Scientific honesty (read before citing)
+## Scientific honesty (read before citing)
 
 - Items 1–4 of the chain are **theorems** of general relativity. Item 4 is what most popular accounts omit: Kruskal's white hole is erased by the collapse.
 - Items 5–6 are **models**: they depend on physics beyond classical relativity. They are exact solutions *of those models' equations*, not observations.
@@ -260,7 +260,7 @@ docs/                  derivations (01), open questions (02), birth (03)
 
 ---
 
-## 📚 References
+## References
 
 <details>
 <summary><b>Show references</b></summary>

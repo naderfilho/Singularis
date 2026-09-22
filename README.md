@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌌 SEMENTE · blackhole-genesis
+# SEMENTE · blackhole-genesis
 
 **Todo buraco negro guarda a semente de um buraco branco. Todo buraco branco é um Big Bang.**<br>
 Este repositório transforma essa frase em equações resolvidas, redes neurais treinadas e imagens calculadas, sem esconder onde a física termina e a especulação começa.
@@ -31,21 +31,21 @@ Este repositório transforma essa frase em equações resolvidas, redes neurais 
 
 ---
 
-## 📑 Índice
+## Índice
 
-- [Em 30 segundos](#-em-30-segundos)
-- [A ideia, em uma cadeia de fatos](#-a-ideia-em-uma-cadeia-de-fatos)
-- [O diferencial: perguntas em aberto](#-o-diferencial-experimentos-sobre-perguntas-em-aberto)
-- [O modelo contra o nosso universo](#-o-modelo-contra-o-nosso-universo)
-- [Comece aqui](#-comece-aqui)
-- [Galeria](#%EF%B8%8F-galeria)
-- [Estrutura](#%EF%B8%8F-estrutura)
-- [Honestidade científica](#%EF%B8%8F-honestidade-científica-leia-antes-de-citar)
-- [Referências](#-referências)
+- [Em 30 segundos](#em-30-segundos)
+- [A ideia, em uma cadeia de fatos](#a-ideia-em-uma-cadeia-de-fatos)
+- [O diferencial: perguntas em aberto](#o-diferencial-experimentos-sobre-perguntas-em-aberto)
+- [O modelo contra o nosso universo](#o-modelo-contra-o-nosso-universo)
+- [Comece aqui](#comece-aqui)
+- [Galeria](#galeria)
+- [Estrutura](#estrutura)
+- [Honestidade científica](#honestidade-científica-leia-antes-de-citar)
+- [Referências](#referências)
 
 ---
 
-## ⚡ Em 30 segundos
+## Em 30 segundos
 
 | | |
 |---|---|
@@ -56,7 +56,7 @@ Este repositório transforma essa frase em equações resolvidas, redes neurais 
 
 ---
 
-## 🧭 A ideia, em uma cadeia de fatos
+## A ideia, em uma cadeia de fatos
 
 | # | afirmação | status | onde no código |
 |---|---|---|---|
@@ -71,7 +71,7 @@ Este repositório transforma essa frase em equações resolvidas, redes neurais 
 | 9 | Uma rede neural que só vê as equações (PINN) reconstrói o ricochete com erro $10^{-5}$. | **resultado deste projeto** | `pinn.py`, fig. 11 |
 
 <details>
-<summary><b>📐 Ver o diagrama de Kruskal com a estrela apagando o buraco branco</b></summary>
+<summary><b>Ver o diagrama de Kruskal com a estrela apagando o buraco branco</b></summary>
 <br>
 
 ![kruskal](docs/img/01_kruskal.png)
@@ -81,7 +81,7 @@ A região hachurada é o interior da estrela: lá a métrica é Friedmann, não 
 </details>
 
 <details>
-<summary><b>🕳️ Ver o universo dentro do buraco negro ricocheteando</b></summary>
+<summary><b>Ver o universo dentro do buraco negro ricocheteando</b></summary>
 <br>
 
 ![interior](docs/img/04_interior_universo.png)
@@ -92,7 +92,7 @@ Derivações completas em [`docs/01_matematica.md`](docs/01_matematica.md).
 
 ---
 
-## 🔬 O diferencial: experimentos sobre perguntas em aberto
+## O diferencial: experimentos sobre perguntas em aberto
 
 Quatro testes numéricos feitos dentro dos modelos acima, com resultados que, até onde sabemos, não estavam calculados nesta forma (`semente/fronteira.py`, figuras 16–19, [`docs/02_fronteira.md`](docs/02_fronteira.md)).
 
@@ -104,7 +104,7 @@ Quatro testes numéricos feitos dentro dos modelos acima, com resultados que, at
 | D | A previsão de Smolin (M_max de estrelas de nêutrons ≈ 1.6 M☉) sobrevive aos dados? | Excluída por > 4σ em quatro pulsares; a versão revisada (2 M☉) está no limite. |
 
 <details>
-<summary><b>📊 Ver a figura da junção (por que só ℓ = R_b funciona)</b></summary>
+<summary><b>Ver a figura da junção (por que só ℓ = R_b funciona)</b></summary>
 <br>
 
 ![juncao](docs/img/16_fronteira_juncao.png)
@@ -115,20 +115,20 @@ Cada resultado depende de uma hipótese explícita (tratamento efetivo da torç�
 
 ---
 
-## 🌍 O modelo contra o nosso universo
+## O modelo contra o nosso universo
 
 Nada confirma que nascemos de um buraco negro. O que dá para fazer é o teste de consistência: o modelo prevê propriedades do universo-filho; medimos o nosso (Planck 2018, BICEP/Keck 2021); comparamos (`semente/nascimento.py`, figuras 20–21, [`docs/03_nascimento.md`](docs/03_nascimento.md)).
 
 | previsão do modelo | previsto | observado | veredito |
 |---|---|---|---|
-| Espectro primordial (Mukhanov–Sasaki através do ricochete, vácuo de Bunch–Davies na contração de poeira) | $n_s = 1.004$, < 1% de variação em 1.2 décadas | $n_s = 0.9665 \pm 0.0038$ | 🟢 **compatível**: quase-invariância de escala **sem inflação** |
-| Curvatura: o filho é fechado | $\Omega_k < 0$ | Planck+BAO $0.0007\pm0.0019$; Planck só $-0.011\pm0.0065$ | 🟢 **compatível**, falsificável |
-| Massa do pai (curvatura + conservação) | $\ge 4.7\times10^{23}\,M_\odot$ | massa do universo observável ~ $10^{23}\,M_\odot$ | 🟡 consistente (não é evidência) |
-| Razão tensor/escalar do ricochete de matéria mínimo | $r = 24$ | $r < 0.036$ | 🔴 **falsificado** na versão mínima |
-| Expansão acelerada | não prevista | $\Lambda$ domina | ⚪ não previsto |
+| Espectro primordial (Mukhanov–Sasaki através do ricochete, vácuo de Bunch–Davies na contração de poeira) | $n_s = 1.004$, < 1% de variação em 1.2 décadas | $n_s = 0.9665 \pm 0.0038$ | **compatível**: quase-invariância de escala **sem inflação** |
+| Curvatura: o filho é fechado | $\Omega_k < 0$ | Planck+BAO $0.0007\pm0.0019$; Planck só $-0.011\pm0.0065$ | **compatível**, falsificável |
+| Massa do pai (curvatura + conservação) | $\ge 4.7\times10^{23}\,M_\odot$ | massa do universo observável ~ $10^{23}\,M_\odot$ | consistente (não é evidência) |
+| Razão tensor/escalar do ricochete de matéria mínimo | $r = 24$ | $r < 0.036$ | **falsificado** na versão mínima |
+| Expansão acelerada | não prevista | $\Lambda$ domina | não previsto |
 
 <details>
-<summary><b>📈 Ver o espectro primordial saindo do ricochete</b></summary>
+<summary><b>Ver o espectro primordial saindo do ricochete</b></summary>
 <br>
 
 ![espectro](docs/img/20_nascimento_espectro.png)
@@ -139,7 +139,7 @@ Nada confirma que nascemos de um buraco negro. O que dá para fazer é o teste d
 
 ---
 
-## 🚀 Comece aqui
+## Comece aqui
 
 ```bash
 git clone https://github.com/naderfilho/blackhole-genesis.git
@@ -152,7 +152,7 @@ python scripts/run_all.py          # gera 21 figuras + renders em ./output (~4 m
 **Visualizador em tempo real:** abra [`web/index.html`](web/index.html) num navegador com WebGL2 e arraste **ℓ** de 0 até 3. Cada pixel integra a geodésica exata na GPU.
 
 <details>
-<summary><b>🐍 Usar como biblioteca</b></summary>
+<summary><b>Usar como biblioteca</b></summary>
 <br>
 
 ```python
@@ -177,7 +177,7 @@ print(bs.spectral_index(ks, bs.spectrum(ks)))    # ≈ 1.00
 </details>
 
 <details>
-<summary><b>🧪 Rodar só uma parte</b></summary>
+<summary><b>Rodar só uma parte</b></summary>
 <br>
 
 ```bash
@@ -191,7 +191,7 @@ python -m semente.figures_nascimento        # só o veredito vs Planck/BICEP
 
 ---
 
-## 🖼️ Galeria
+## Galeria
 
 <details>
 <summary><b>Ver a lista completa das 21 figuras</b></summary>
@@ -228,7 +228,7 @@ python -m semente.figures_nascimento        # só o veredito vs Planck/BICEP
 
 ---
 
-## 🗂️ Estrutura
+## Estrutura
 
 ```
 semente/
@@ -250,7 +250,7 @@ docs/                  derivações (01), fronteira (02), nascimento (03)
 
 ---
 
-## ⚖️ Honestidade científica (leia antes de citar)
+## Honestidade científica (leia antes de citar)
 
 - Itens 1–4 da cadeia são **teoremas** da relatividade geral. O item 4 é o que a maioria das divulgações omite: o buraco branco de Kruskal é apagado pelo colapso.
 - Itens 5–6 são **modelos**: dependem de física além da relatividade clássica. São soluções exatas *das equações desses modelos*, não observações.
@@ -260,7 +260,7 @@ docs/                  derivações (01), fronteira (02), nascimento (03)
 
 ---
 
-## 📚 Referências
+## Referências
 
 <details>
 <summary><b>Ver as referências</b></summary>
